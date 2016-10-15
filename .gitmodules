@@ -1,0 +1,3 @@
+[submodule "aozorabunko"]
+	path = aozorabunko
+	url = git@github.com:aozorabunko/aozorabunko.git
