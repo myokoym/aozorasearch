@@ -25,13 +25,20 @@ Groonga::Database.open("db/db") do |database|
       if subtitle
         title = [title, subtitle].join(" ")
       end
+      content = ""
+      doc.search("body .main_text").children.each do |node|
+        case node.node_name
+        when "text"
+          content += node.text
+        end
+      end
       books.add(
         basename,
         title: title,
         author: doc.css(".author").text,
         author_id: author_id,
         book_id: book_id,
-        body: html.encode("utf-8", encoding)
+        body: content
       )
     end
   end
