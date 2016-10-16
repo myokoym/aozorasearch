@@ -17,3 +17,7 @@ The full-text search system for Aozora Bunko by Groonga
 ### Run web server
 
     $ bundle exec ruby -I lib bin/aozorasearch start
+
+## License
+
+Ruby Code (.rb): LGPL 2.1 or later. See LICENSE.txt for details.
