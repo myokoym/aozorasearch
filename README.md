@@ -1,13 +1,19 @@
-# Aozoraroonga (temporary name)
+# Aozorasearch
 
 The full-text search system for Aozora Bunko by Groonga
 
 ## Usage
 
-### Create database
+### Prepare
 
-    groonga -n db/db < schema.grn
+    $ git clone https://github.com/myokoym/aozorasearch
+    $ bundle install
+    $ git submodule update --init  # Free space of 11GB is required
 
 ### Load data
 
-    ./load.rb
+    $ bundle exec ruby -I lib bin/aozorasearch load
+
+### Run web server
+
+    $ bundle exec ruby -I lib bin/aozorasearch start
