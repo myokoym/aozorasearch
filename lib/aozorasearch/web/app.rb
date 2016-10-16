@@ -69,7 +69,7 @@ module Aozorasearch
             words = []
           end
           options ||= {}
-          options[:author_name] = params[:author_name] if params[:author_name]
+          options[:author_id] = params[:author_id] if params[:author_id]
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)
@@ -85,17 +85,21 @@ module Aozorasearch
           @paginated_books
         end
 
+        def card_url(book)
+          "http://www.aozora.gr.jp/cards/#{book.author._key}/card#{book._key}.html"
+        end
+
         def grouping(table)
-          key = "author_name"
+          key = "author"
           table.group(key).sort_by {|item| item.n_sub_records }.reverse
         end
 
-        def drilled_url(author_name)
-          url("/search?author_name=#{author_name}&word=#{params[:word]}")
+        def drilled_url(author)
+          url("/search?author_id=#{author._key}&word=#{params[:word]}")
         end
 
-        def drilled_label(author_name)
-          author_name
+        def drilled_label(author)
+          "#{author.name} (#{author.n_sub_records})"
         end
 
         def groonga_version

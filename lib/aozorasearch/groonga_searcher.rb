@@ -45,14 +45,22 @@ module Aozorasearch
     private
     def select_books(books, words, options)
       selected_books = books.select do |record|
-        match_target = record.match_target do |match_record|
-            (match_record.index('Terms.Books_title') * 10) |
-            (match_record.index('Terms.Books_author_name') * 5) |
-            (match_record.index('Terms.Books_content'))
+        conditions = []
+        if options[:author_id]
+          conditions << (record.author._key == options[:author_id])
         end
-        words.collect do |word|
-          match_target =~ word
+        unless words.empty?
+          match_target = record.match_target do |match_record|
+              (match_record.index('Terms.Books_title') * 10) |
+              (match_record.index('Terms.Books_content'))
+          end
+          full_text_search = words.collect {|word|
+            (match_target =~ word) |
+              (record.author.name =~ word)
+          }.inject(&:&)
+          conditions << full_text_search
         end
+        conditions
       end
       selected_books
     end

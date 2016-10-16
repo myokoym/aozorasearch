@@ -26,12 +26,16 @@ module Aozorasearch
       authors = File.read("data/authors.txt")
       authors.each_line do |line|
         puts line
-        author_id = line.split(",")[0]
+        author_id, author_name = line.split(",")
+        author_name.gsub!(/[\" ]/, "")
+        author = Groonga["Authors"].add(
+          author_id,
+          name: author_name
+        )
         Dir.glob("aozorabunko/cards/#{author_id}/files/*.html") do |path|
           html = File.read(path)
           encoding = NKF.guess(html).to_s
           doc = Nokogiri::HTML.parse(html, nil, encoding)
-          books = Groonga["Books"]
           basename = File.basename(path)
           if /\A\d+_/ =~ basename
             book_id = basename.split("_")[0]
@@ -40,8 +44,8 @@ module Aozorasearch
           end
           title = doc.css(".title").text
           subtitle = doc.css(".subtitle").text
-          if subtitle
-            title = [title, subtitle].join(" ")
+          unless subtitle.empty?
+            title += " #{subtitle}"
           end
           content = ""
           doc.search("body .main_text").children.each do |node|
@@ -50,13 +54,11 @@ module Aozorasearch
               content += node.text
             end
           end
-          books.add(
+          Groonga["Books"].add(
             book_id,
             title: title,
-            author_name: doc.css(".author").text,
-            #author_id: author_id,
-            #book_id: book_id,
-            content: content
+            content: content,
+            author: author
           )
         end
       end

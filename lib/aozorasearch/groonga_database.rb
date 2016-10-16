@@ -16,7 +16,6 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-require "date"
 require "groonga"
 
 module Aozorasearch
@@ -42,15 +41,6 @@ module Aozorasearch
           close unless closed?
         end
       end
-    end
-
-    def add(id, title, author_name, content)
-      columns = {
-        :title   => title,
-        :author_name  => author_name,
-        :content => content,
-      }
-      books.add(id, columns)
     end
 
     def delete(id_or_key_or_conditions)
@@ -105,10 +95,6 @@ module Aozorasearch
       @books ||= Groonga["Books"]
     end
 
-    def dump
-      Groonga::DatabaseDumper.dump
-    end
-
     private
     def reset_context(encoding)
       Groonga::Context.default_options = {:encoding => encoding}
@@ -122,11 +108,16 @@ module Aozorasearch
 
     def populate_schema
       Groonga::Schema.define do |schema|
+        schema.create_table("Authors",
+                            :type => :hash) do |table|
+          table.short_text("name")
+        end
+
         schema.create_table("Books",
                             :type => :hash) do |table|
           table.short_text("title")
-          table.short_text("author_name")
           table.text("content")
+          table.reference("author", "Authors")
         end
 
         schema.create_table("Terms",
@@ -135,7 +126,11 @@ module Aozorasearch
                             :default_tokenizer => "TokenBigram") do |table|
           table.index("Books.title")
           table.index("Books.content")
-          table.index("Books.author_name")
+          table.index("Authors.name")
+        end
+
+        schema.change_table("Authors") do |table|
+          table.index("Books.author")
         end
       end
     end
