@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{The full-text search system for Aozora Bunko by Groonga (via Rroonga) with Ruby.}
   spec.summary       = %q{Full-Text Search system for Aozora Bunko}
   spec.homepage      = "http://myokoym.net/aozorasearch/"
-  spec.license       = ""
+  spec.license       = "LGPLv2.1+"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) {|f| File.basename(f) }
