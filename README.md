@@ -1,4 +1,4 @@
-# Aozorasearch
+# Aozorasearch - 青空文庫 本文対応 全文検索システム
 
 The full-text search system for Aozora Bunko by Groonga
 
