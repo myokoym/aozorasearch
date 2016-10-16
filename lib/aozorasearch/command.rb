@@ -17,7 +17,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 require "thor"
-require "parallel"
 require "launchy"
 require "aozorasearch/version"
 require "aozorasearch/groonga_database"
@@ -47,7 +46,7 @@ module Aozorasearch
     option :parallel, :type => :boolean, :desc => "run on multiple processes"
     def load
       GroongaDatabase.new.open(@database_dir) do |database|
-        Loader.new.load
+        Loader.new.load(options)
       end
     end
 

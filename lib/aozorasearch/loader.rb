@@ -18,16 +18,30 @@
 
 require "nkf"
 require "nokogiri"
+require "parallel"
 require "aozorasearch/groonga_database"
 
 module Aozorasearch
   class Loader
-    def load
+    def load(options={})
       authors = File.read("data/authors.all.txt")
-      authors.each_line do |line|
+      load_proc = lambda do |line|
         puts line
         author_id, author_name = line.split(",")
         author_name.gsub!(/[\" ]/, "")
+        load_by_author(author_id, author_name)
+      end
+
+      if options[:parallel]
+        Parallel.each(authors.lines,
+                      &load_proc)
+      else
+        authors.each_line(&load_proc)
+      end
+    end
+
+    private
+    def load_by_author(author_id, author_name)
         author = Groonga["Authors"].add(
           author_id,
           name: author_name
@@ -60,7 +74,6 @@ module Aozorasearch
             content: content,
             author: author
           )
-        end
       end
     end
   end
