@@ -42,38 +42,38 @@ module Aozorasearch
 
     private
     def load_by_author(author_id, author_name)
-        author = Groonga["Authors"].add(
-          author_id,
-          name: author_name
+      author = Groonga["Authors"].add(
+        author_id,
+        name: author_name
+      )
+      Dir.glob("aozorabunko/cards/#{author_id}/files/*.html") do |path|
+        html = File.read(path)
+        encoding = NKF.guess(html).to_s
+        doc = Nokogiri::HTML.parse(html, nil, encoding)
+        basename = File.basename(path)
+        if /\A\d+_/ =~ basename
+          book_id = basename.split("_")[0]
+        else
+          book_id = basename.split(".")[0]
+        end
+        title = doc.css(".title").text
+        subtitle = doc.css(".subtitle").text
+        unless subtitle.empty?
+          title += " #{subtitle}"
+        end
+        content = ""
+        doc.search("body .main_text").children.each do |node|
+          case node.node_name
+          when "text"
+            content += node.text
+          end
+        end
+        Groonga["Books"].add(
+          book_id,
+          title: title,
+          content: content,
+          author: author
         )
-        Dir.glob("aozorabunko/cards/#{author_id}/files/*.html") do |path|
-          html = File.read(path)
-          encoding = NKF.guess(html).to_s
-          doc = Nokogiri::HTML.parse(html, nil, encoding)
-          basename = File.basename(path)
-          if /\A\d+_/ =~ basename
-            book_id = basename.split("_")[0]
-          else
-            book_id = basename.split(".")[0]
-          end
-          title = doc.css(".title").text
-          subtitle = doc.css(".subtitle").text
-          unless subtitle.empty?
-            title += " #{subtitle}"
-          end
-          content = ""
-          doc.search("body .main_text").children.each do |node|
-            case node.node_name
-            when "text"
-              content += node.text
-            end
-          end
-          Groonga["Books"].add(
-            book_id,
-            title: title,
-            content: content,
-            author: author
-          )
       end
     end
   end
