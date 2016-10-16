@@ -23,7 +23,7 @@ require "aozorasearch/groonga_database"
 module Aozorasearch
   class Loader
     def load
-      authors = File.read("data/authors.txt")
+      authors = File.read("data/authors.all.txt")
       authors.each_line do |line|
         puts line
         author_id, author_name = line.split(",")
