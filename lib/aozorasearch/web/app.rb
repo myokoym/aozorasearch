@@ -77,7 +77,7 @@ module Aozorasearch
           @books = searcher.search(database, words, options)
           @snippet = searcher.snippet
           page = (params[:page] || 1).to_i
-          size = (params[:n_per_page] || 50).to_i
+          size = (params[:n_per_page] || 20).to_i
           @paginated_books = @books.paginate([["_score", :desc]],
                                              page: page,
                                              size: size)
