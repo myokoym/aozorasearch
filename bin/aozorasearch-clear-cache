@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require "racknga"
+require "racknga/cache_database"
+
+bin_dir = File.expand_path(File.dirname(__FILE__))
+base_dir = File.join(bin_dir, "..")
+
+cache_database_path = File.join(base_dir, "var", "cache", "db")
+cache_database = Racknga::CacheDatabase.new(cache_database_path)
+cache_database.purge_old_responses

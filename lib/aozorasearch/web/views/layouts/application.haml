@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title aozorasearch-web
+    %meta(name="viewport" content="width=device-width" initial-scale="1.0")
+    %link(href="vendor/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet" media="screen")
+  %body
+    = render :_header, layout: false
+
+    .container
+      = yield
+
+    #footer.container.text-right
+      = render :_footer, layout: false

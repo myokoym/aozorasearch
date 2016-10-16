@@ -1,0 +1,3 @@
+%form{:action => url("/search", false, true), :method => :get}
+  %input{:type => "textarea", :name => "word", :size => 20, :value => params[:word]}
+  %input{:type => "submit", :value => "Search"}

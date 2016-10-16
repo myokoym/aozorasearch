@@ -1,0 +1,8 @@
+= render :_search_form, layout: false
+- if @books
+  .row
+    .col-sm-8
+      = render :_books, layout: false
+    .col-sm-4
+      %p
+        = render :_authors, layout: false
