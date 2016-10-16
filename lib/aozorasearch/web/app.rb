@@ -120,7 +120,7 @@ module Aozorasearch
             snippet.add_keyword(word)
           end
 
-          p snippet.execute(selected_books.first.content)
+          snippet.execute(selected_books.first.content)
         end
       end
     end
