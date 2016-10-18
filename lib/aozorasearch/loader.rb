@@ -16,27 +16,39 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
+require "csv"
 require "nkf"
 require "nokogiri"
 require "parallel"
+require "zip"
 require "aozorasearch/groonga_database"
 
 module Aozorasearch
   class Loader
     def load(options={})
-      authors = File.read("data/authors.all.txt")
-      load_proc = lambda do |line|
-        puts line
-        author_id, author_name = line.split(",")
-        author_name.gsub!(/[\" ]/, "")
-        load_by_author(author_id, author_name)
+      authors = {}
+      Zip::File.open("aozorabunko/index_pages/list_person_all_utf8.zip") do |zip_file|
+        entry = zip_file.glob("*.csv").first
+        authors_csv = entry.get_input_stream.read
+        authors_csv.force_encoding(Encoding::UTF_8)
+        CSV.new(authors_csv,
+                headers: true,
+                converters: nil).each do |row|
+          id = row[0]
+          name = row[1]
+          authors[id] = name
+        end
+      end
+
+      load_proc = lambda do |(id, name)|
+        puts "#{id} #{name}"
+        load_by_author(id, name)
       end
 
       if options[:parallel]
-        Parallel.each(authors.lines,
-                      &load_proc)
+        Parallel.each(authors, &load_proc)
       else
-        authors.each_line(&load_proc)
+        authors.each(&load_proc)
       end
     end
 

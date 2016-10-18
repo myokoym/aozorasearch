@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aozorasearch (0.0.1)
+    aozorasearch (0.0.2)
       haml
       kaminari
       launchy
@@ -9,6 +9,7 @@ PATH
       parallel
       racknga
       rroonga (>= 5.0.0)
+      rubyzip
       sinatra
       sinatra-contrib
       sinatra-cross_origin
@@ -97,6 +98,7 @@ GEM
       groonga-client (>= 0.0.3)
       json
       pkg-config
+    rubyzip (1.2.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)

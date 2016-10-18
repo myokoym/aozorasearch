@@ -42,7 +42,7 @@ module Aozorasearch
       puts Aozorasearch::VERSION
     end
 
-    desc "load", "Load books."
+    desc "load", "Load all books."
     option :parallel, :type => :boolean, :desc => "run on multiple processes"
     def load
       GroongaDatabase.new.open(@database_dir) do |database|
