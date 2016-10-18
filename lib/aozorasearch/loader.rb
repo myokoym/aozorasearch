@@ -22,44 +22,51 @@ require "nokogiri"
 require "parallel"
 require "zip"
 require "aozorasearch/groonga_database"
+require "aozorasearch/book"
 
 module Aozorasearch
   class Loader
     def load(options={})
-      authors = {}
-      Zip::File.open("aozorabunko/index_pages/list_person_all_utf8.zip") do |zip_file|
+      books = []
+      Zip::File.open("aozorabunko/index_pages/list_person_all_extended_utf8.zip") do |zip_file|
         entry = zip_file.glob("*.csv").first
         authors_csv = entry.get_input_stream.read
         authors_csv.force_encoding(Encoding::UTF_8)
         CSV.new(authors_csv,
                 headers: true,
                 converters: nil).each do |row|
-          id = row[0]
-          name = row[1]
-          authors[id] = name
+          books << Book.new(row)
         end
       end
 
-      load_proc = lambda do |(id, name)|
-        puts "#{id} #{name}"
-        load_by_author(id, name)
+      load_proc = lambda do |book|
+        load_book(book)
       end
 
       if options[:parallel]
-        Parallel.each(authors, &load_proc)
+        Parallel.each(books, &load_proc)
       else
-        authors.each(&load_proc)
+        books.each(&load_proc)
       end
     end
 
     private
-    def load_by_author(author_id, author_name)
-      author = Groonga["Authors"].add(
-        author_id,
-        name: author_name
-      )
-      Dir.glob("aozorabunko/cards/#{author_id}/files/*.html") do |path|
-        html = File.read(path)
+    def load_book(book)
+      author = Groonga["Authors"][book.author_id]
+      unless author
+        author = Groonga["Authors"].add(
+          book.author_id,
+          name: [
+                  book.author_last_name,
+                  book.author_first_name,
+                ].join
+        )
+      end
+
+      path = book.html_url.scan(/\/cards\/.*/).first
+      return unless path
+      puts "#{book.name} - #{book.author_name}"
+      html = File.read(File.join("aozorabunko", path))
         encoding = NKF.guess(html).to_s
         doc = Nokogiri::HTML.parse(html, nil, encoding)
         basename = File.basename(path)
@@ -68,10 +75,9 @@ module Aozorasearch
         else
           book_id = basename.split(".")[0]
         end
-        title = doc.css(".title").text
-        subtitle = doc.css(".subtitle").text
-        unless subtitle.empty?
-          title += " #{subtitle}"
+        title = book.title
+        unless book.subtitle.empty?
+          title += " #{book.subtitle}"
         end
         content = ""
         doc.search("body .main_text").children.each do |node|
@@ -81,12 +87,11 @@ module Aozorasearch
           end
         end
         Groonga["Books"].add(
-          book_id,
+          book.id,
           title: title,
           content: content,
           author: author
         )
-      end
     end
   end
 end
