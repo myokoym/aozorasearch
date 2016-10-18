@@ -8,7 +8,8 @@
     %li
       %p
         = link_to("#{book.title} - #{book.author.name}", book.card_url)
-      %p
-        = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe
+      - if params["word"]
+        %p
+          = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe
 - if @paginated_books.total_pages > 1
   = paginate(@paginated_books)
