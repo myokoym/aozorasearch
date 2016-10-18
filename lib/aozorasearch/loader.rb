@@ -69,12 +69,6 @@ module Aozorasearch
       html = File.read(File.join("aozorabunko", path))
       encoding = NKF.guess(html).to_s
       doc = Nokogiri::HTML.parse(html, nil, encoding)
-      basename = File.basename(path)
-      if /\A\d+_/ =~ basename
-        book_id = basename.split("_")[0]
-      else
-        book_id = basename.split(".")[0]
-      end
       title = book.title
       unless book.subtitle.empty?
         title += " #{book.subtitle}"
