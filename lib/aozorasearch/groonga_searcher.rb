@@ -52,6 +52,11 @@ module Aozorasearch
         if options[:orthography]
           conditions << (record.orthography._key == options[:orthography])
         end
+        if options[:copyrighted]
+          p record.copyrighted
+          p options
+          conditions << (record.copyrighted._key == options[:copyrighted])
+        end
         unless words.empty?
           match_target = record.match_target do |match_record|
               (match_record.index('Terms.Books_title') * 10) |

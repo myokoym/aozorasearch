@@ -71,6 +71,7 @@ module Aozorasearch
           options ||= {}
           options[:author_id] = params[:author_id] if params[:author_id]
           options[:orthography] = params[:orthography] if params[:orthography]
+          options[:copyrighted] = params[:copyrighted] if params[:copyrighted]
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)

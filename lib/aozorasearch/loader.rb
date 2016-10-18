@@ -84,6 +84,7 @@ module Aozorasearch
         author: author,
         card_url: book.card_url,
         orthography: book.orthography,
+        copyrighted: book.copyrighted,
       )
     end
   end

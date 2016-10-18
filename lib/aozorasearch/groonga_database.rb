@@ -117,6 +117,10 @@ module Aozorasearch
                             :type => :hash) do |table|
         end
 
+        schema.create_table("CopyrightedFlags",
+                            :type => :hash) do |table|
+        end
+
         schema.create_table("Books",
                             :type => :hash) do |table|
           table.short_text("title")
@@ -124,6 +128,7 @@ module Aozorasearch
           table.reference("author", "Authors")
           table.short_text("card_url")
           table.reference("orthography", "Orthographies")
+          table.reference("copyrighted", "CopyrightedFlags")
         end
 
         schema.create_table("Terms",
