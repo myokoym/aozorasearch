@@ -56,10 +56,7 @@ module Aozorasearch
       unless author
         author = Groonga["Authors"].add(
           book.author_id,
-          name: [
-                  book.author_last_name,
-                  book.author_first_name,
-                ].join
+          name: book.author_name
         )
       end
 
