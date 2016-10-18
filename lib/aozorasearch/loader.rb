@@ -59,6 +59,10 @@ module Aozorasearch
           name: book.author_name
         )
       end
+      orthography = Groonga["Orthographies"][book.orthography]
+      unless orthography
+        orthography = Groonga["Orthographies"].add(book.orthography)
+      end
 
       path = book.html_url.scan(/\/cards\/.*/).first
       return unless path
@@ -83,6 +87,7 @@ module Aozorasearch
         content: content,
         author: author,
         card_url: book.card_url,
+        orthography: orthography,
       )
     end
   end

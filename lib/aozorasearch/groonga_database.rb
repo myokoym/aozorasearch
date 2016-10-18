@@ -113,12 +113,17 @@ module Aozorasearch
           table.short_text("name")
         end
 
+        schema.create_table("Orthographies",
+                            :type => :hash) do |table|
+        end
+
         schema.create_table("Books",
                             :type => :hash) do |table|
           table.short_text("title")
           table.text("content")
           table.reference("author", "Authors")
           table.short_text("card_url")
+          table.reference("orthography", "Orthographies")
         end
 
         schema.create_table("Terms",

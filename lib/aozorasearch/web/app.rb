@@ -70,6 +70,7 @@ module Aozorasearch
           end
           options ||= {}
           options[:author_id] = params[:author_id] if params[:author_id]
+          options[:orthography] = params[:orthography] if params[:orthography]
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)

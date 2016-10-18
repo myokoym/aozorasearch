@@ -49,6 +49,9 @@ module Aozorasearch
         if options[:author_id]
           conditions << (record.author._key == options[:author_id])
         end
+        if options[:orthography]
+          conditions << (record.orthography._key == options[:orthography])
+        end
         unless words.empty?
           match_target = record.match_target do |match_record|
               (match_record.index('Terms.Books_title') * 10) |
