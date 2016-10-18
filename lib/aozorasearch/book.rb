@@ -8,7 +8,7 @@ module Aozorasearch
     attr_reader :copyrighted
     attr_reader :created_date
     attr_reader :updated_date
-    attr_reader :url
+    attr_reader :card_url
     attr_reader :author_id
     attr_reader :author_last_name
     attr_reader :author_first_name
@@ -32,7 +32,7 @@ module Aozorasearch
       @copyrighted        = row[10]
       @created_date       = row[11]
       @updated_date       = row[12]
-      @url                = row[13]
+      @card_url           = row[13]
       @author_id          = row[14]
       @author_last_name   = row[15]
       @author_first_name  = row[16]
