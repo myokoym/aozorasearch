@@ -93,11 +93,18 @@ module Aozorasearch
         end
 
         def drilled_url(author)
-          url(["/search", params.merge(author_id: author._key).to_param].join("?"))
+          url(["/search", drilled_params(author_id: author._key)].join("?"))
         end
 
         def drilled_label(author)
           "#{author.name} (#{author.n_sub_records})"
+        end
+
+        def drilled_params(additional_params)
+          tmp_params = params.dup
+          tmp_params.merge!(additional_params)
+          tmp_params.delete("page")
+          tmp_params.to_param
         end
 
         def groonga_version
