@@ -1,7 +1,7 @@
 - @books.group("orthography").each do |orthography|
-  = link_to("#{orthography._key} (#{orthography.n_sub_records})", url("/search?orthography=#{orthography._key}&word=#{params[:word]}"))
+  = link_to("#{orthography._key} (#{orthography.n_sub_records})", url(["/search", params.merge(orthography: orthography._key).to_param].join("?")))
   %br
 %br
 - @books.group("copyrighted").each do |copyrighted|
-  = link_to("著作権#{copyrighted._key} (#{copyrighted.n_sub_records})", url("/search?copyrighted=#{copyrighted._key}&word=#{params[:word]}"))
+  = link_to("著作権#{copyrighted._key} (#{copyrighted.n_sub_records})", url(["/search", params.merge(copyrighted: copyrighted._key).to_param].join("?")))
   %br

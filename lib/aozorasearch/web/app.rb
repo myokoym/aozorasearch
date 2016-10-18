@@ -93,7 +93,7 @@ module Aozorasearch
         end
 
         def drilled_url(author)
-          url("/search?author_id=#{author._key}&word=#{params[:word]}")
+          url(["/search", params.merge(author_id: author._key).to_param].join("?"))
         end
 
         def drilled_label(author)
