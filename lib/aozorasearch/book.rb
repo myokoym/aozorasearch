@@ -50,7 +50,7 @@ module Aozorasearch
       unless @subtitle.empty?
         @name += " #{@subtitle}"
       end
-      @author_name = [@author_last_name, @author_first_name].join(" ")
+      @author_name = [@author_last_name, @author_first_name].join
     end
   end
 end
