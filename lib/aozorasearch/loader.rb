@@ -84,7 +84,8 @@ module Aozorasearch
         book.id,
         title: title,
         content: content,
-        author: author
+        author: author,
+        card_url: book.card_url,
       )
     end
   end

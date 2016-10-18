@@ -85,10 +85,6 @@ module Aozorasearch
           @paginated_books
         end
 
-        def card_url(book)
-          "http://www.aozora.gr.jp/cards/#{book.author._key}/card#{book._key}.html"
-        end
-
         def grouping(table)
           key = "author"
           table.group(key).sort_by {|item| item.n_sub_records }.reverse

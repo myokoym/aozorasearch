@@ -118,6 +118,7 @@ module Aozorasearch
           table.short_text("title")
           table.text("content")
           table.reference("author", "Authors")
+          table.short_text("card_url")
         end
 
         schema.create_table("Terms",
