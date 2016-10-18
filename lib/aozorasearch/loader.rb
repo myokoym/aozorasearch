@@ -67,31 +67,31 @@ module Aozorasearch
       return unless path
       puts "#{book.name} - #{book.author_name}"
       html = File.read(File.join("aozorabunko", path))
-        encoding = NKF.guess(html).to_s
-        doc = Nokogiri::HTML.parse(html, nil, encoding)
-        basename = File.basename(path)
-        if /\A\d+_/ =~ basename
-          book_id = basename.split("_")[0]
-        else
-          book_id = basename.split(".")[0]
+      encoding = NKF.guess(html).to_s
+      doc = Nokogiri::HTML.parse(html, nil, encoding)
+      basename = File.basename(path)
+      if /\A\d+_/ =~ basename
+        book_id = basename.split("_")[0]
+      else
+        book_id = basename.split(".")[0]
+      end
+      title = book.title
+      unless book.subtitle.empty?
+        title += " #{book.subtitle}"
+      end
+      content = ""
+      doc.search("body .main_text").children.each do |node|
+        case node.node_name
+        when "text"
+          content += node.text
         end
-        title = book.title
-        unless book.subtitle.empty?
-          title += " #{book.subtitle}"
-        end
-        content = ""
-        doc.search("body .main_text").children.each do |node|
-          case node.node_name
-          when "text"
-            content += node.text
-          end
-        end
-        Groonga["Books"].add(
-          book.id,
-          title: title,
-          content: content,
-          author: author
-        )
+      end
+      Groonga["Books"].add(
+        book.id,
+        title: title,
+        content: content,
+        author: author
+      )
     end
   end
 end
