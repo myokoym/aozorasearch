@@ -1,14 +1,14 @@
 - if params["ndc2"] || params["ndc3"]
   - @books.group("ndc3").each do |ndc3|
-    = link_to("#{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params(ndc3: ndc3._key)].join("?")))
+    = link_to("NDC #{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params(ndc3: ndc3._key)].join("?")))
     %br
 - elsif params["ndc1"]
   - @books.group("ndc2").each do |ndc2|
-    = link_to("#{ndc2.label} (#{ndc2.n_sub_records})", url(["/search", drilled_params(ndc2: ndc2._key)].join("?")))
+    = link_to("NDC #{ndc2._key} #{ndc2.label} (#{ndc2.n_sub_records})", url(["/search", drilled_params(ndc2: ndc2._key)].join("?")))
     %br
 - else
   - @books.group("ndc1").each do |ndc1|
-    = link_to("#{ndc1.label} (#{ndc1.n_sub_records})", url(["/search", drilled_params(ndc1: ndc1._key)].join("?")))
+    = link_to("NDC #{ndc1._key} #{ndc1.label} (#{ndc1.n_sub_records})", url(["/search", drilled_params(ndc1: ndc1._key)].join("?")))
     %br
 %br
 - @books.group("orthography").each do |orthography|
