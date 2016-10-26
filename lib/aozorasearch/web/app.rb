@@ -105,6 +105,11 @@ module Aozorasearch
         end
 
         def drilled_params(additional_params)
+          additional_params = Hash[
+            additional_params.map do |key, value|
+              [key.to_s, value]
+            end
+          ]
           tmp_params = params.dup
           tmp_params.merge!(additional_params)
           tmp_params.delete("page")
