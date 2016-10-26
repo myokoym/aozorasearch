@@ -4,6 +4,10 @@ module Aozorasearch
     attr_reader :title
     attr_reader :kana
     attr_reader :subtitle
+    attr_reader :ndc
+    attr_reader :ndc1
+    attr_reader :ndc2
+    attr_reader :ndc3
     attr_reader :orthography
     attr_reader :copyrighted
     attr_reader :created_date
@@ -28,6 +32,7 @@ module Aozorasearch
       @title              = row[1]
       @kana               = row[2]
       @subtitle           = row[4]
+      @classification     = row[8]
       @orthography        = row[9]
       @copyrighted        = row[10]
       @created_date       = row[11]
@@ -51,6 +56,13 @@ module Aozorasearch
         @name += " #{@subtitle}"
       end
       @author_name = [@author_last_name, @author_first_name].join
+
+      if /\ANDC (.*)/ =~ @classification
+        @ndc = $1.split(/[[:space:]]/)
+        @ndc1 = @ndc.map {|ndc| ndc[-3] + "00" }.uniq
+        @ndc2 = @ndc.map {|ndc| ndc[-3..-2] + "0" }.uniq
+        @ndc3 = @ndc.map {|ndc| ndc[-3..-1] }.uniq
+      end
     end
   end
 end

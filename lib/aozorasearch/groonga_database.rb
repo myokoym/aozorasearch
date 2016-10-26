@@ -121,6 +121,11 @@ module Aozorasearch
                             :type => :hash) do |table|
         end
 
+        schema.create_table("NdcMaster",
+                            :type => :hash) do |table|
+          table.short_text("label")
+        end
+
         schema.create_table("Books",
                             :type => :hash) do |table|
           table.short_text("title")
@@ -129,6 +134,10 @@ module Aozorasearch
           table.short_text("card_url")
           table.reference("orthography", "Orthographies")
           table.reference("copyrighted", "CopyrightedFlags")
+          table.reference("ndc", "NdcMaster", type: :vector)
+          table.reference("ndc1", "NdcMaster", type: :vector)
+          table.reference("ndc2", "NdcMaster", type: :vector)
+          table.reference("ndc3", "NdcMaster", type: :vector)
         end
 
         schema.create_table("Terms",

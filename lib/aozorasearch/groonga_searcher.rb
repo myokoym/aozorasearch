@@ -55,6 +55,13 @@ module Aozorasearch
         if options[:copyrighted]
           conditions << (record.copyrighted._key == options[:copyrighted])
         end
+        if options[:ndc3]
+          conditions << (record.ndc3._key == options[:ndc3])
+        elsif options[:ndc2]
+          conditions << (record.ndc2._key == options[:ndc2])
+        elsif options[:ndc1]
+          conditions << (record.ndc1._key == options[:ndc1])
+        end
         unless words.empty?
           match_target = record.match_target do |match_record|
               (match_record.index('Terms.Books_title') * 10) |

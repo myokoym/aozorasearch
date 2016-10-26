@@ -85,6 +85,10 @@ module Aozorasearch
         card_url: book.card_url,
         orthography: book.orthography,
         copyrighted: book.copyrighted,
+        ndc: book.ndc,
+        ndc1: book.ndc1,
+        ndc2: book.ndc2,
+        ndc3: book.ndc3,
       )
     end
   end

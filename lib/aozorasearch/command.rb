@@ -50,6 +50,17 @@ module Aozorasearch
       end
     end
 
+    desc "load_ndc", "Load NDC from JSON."
+    def load_ndc(json_path)
+      GroongaDatabase.new.open(@database_dir) do |database|
+        File.open(json_path) do |file|
+          JSON.load(file).each do |id, label|
+            Groonga["NdcMaster"].add(id, label: label)
+          end
+        end
+      end
+    end
+
     desc "search WORD", "Search books from local database."
     def search(*words)
       if words.empty? &&
