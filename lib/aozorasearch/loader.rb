@@ -83,6 +83,7 @@ module Aozorasearch
         content: content,
         author: author,
         card_url: book.card_url,
+        html_url: book.html_url,
         orthography: book.orthography,
         copyrighted: book.copyrighted,
         ndc: book.ndc,

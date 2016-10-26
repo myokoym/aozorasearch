@@ -132,6 +132,7 @@ module Aozorasearch
           table.text("content")
           table.reference("author", "Authors")
           table.short_text("card_url")
+          table.short_text("html_url")
           table.reference("orthography", "Orthographies")
           table.reference("copyrighted", "CopyrightedFlags")
           table.reference("ndc", "NdcMaster", type: :vector)

@@ -6,10 +6,18 @@
 %ul
   - @paginated_books.each do |book|
     %li
-      %p
+      %h4
         = link_to("#{book.title} - #{book.author.name}", book.card_url)
       - if params["word"]
         %p
           = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe
+      %p
+        [
+        = link_to("いますぐXHTML版で読む", book.html_url)
+        ]
+        [
+        = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
+        ]
+      %br
 - if @paginated_books.total_pages > 1
   = paginate(@paginated_books)
