@@ -53,8 +53,6 @@ module Aozorasearch
           conditions << (record.orthography._key == options[:orthography])
         end
         if options[:copyrighted]
-          p record.copyrighted
-          p options
           conditions << (record.copyrighted._key == options[:copyrighted])
         end
         unless words.empty?
