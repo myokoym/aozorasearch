@@ -1,4 +1,8 @@
-- if params["ndc2"] || params["ndc3"]
+- if params["ndc3"] || params["ndc"]
+  - @books.group("ndc").each do |ndc|
+    = link_to("NDC #{ndc._key} #{ndc.label} (#{ndc.n_sub_records})", url(["/search", drilled_params(ndc: ndc._key)].join("?")))
+    %br
+- elsif params["ndc2"]
   - @books.group("ndc3").each do |ndc3|
     = link_to("NDC #{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params(ndc3: ndc3._key)].join("?")))
     %br

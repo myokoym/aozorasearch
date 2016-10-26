@@ -55,7 +55,9 @@ module Aozorasearch
         if options[:copyrighted]
           conditions << (record.copyrighted._key == options[:copyrighted])
         end
-        if options[:ndc3]
+        if options[:ndc]
+          conditions << (record.ndc._key == options[:ndc])
+        elsif options[:ndc3]
           conditions << (record.ndc3._key == options[:ndc3])
         elsif options[:ndc2]
           conditions << (record.ndc2._key == options[:ndc2])
