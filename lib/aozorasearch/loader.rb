@@ -71,7 +71,11 @@ module Aozorasearch
         title += " #{book.subtitle}"
       end
       content = ""
-      doc.search("body .main_text").children.each do |node|
+      main_text_nodes = doc.search("body .main_text").children
+      if main_text_nodes.empty?
+        main_text_nodes = doc.search("body").children
+      end
+      main_text_nodes.each do |node|
         case node.node_name
         when "text"
           content += node.text
