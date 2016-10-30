@@ -2,7 +2,7 @@ module Aozorasearch
   class Book
     attr_reader :id
     attr_reader :title
-    attr_reader :kana
+    attr_reader :title_kana
     attr_reader :subtitle
     attr_reader :ndc
     attr_reader :ndc1
@@ -30,7 +30,7 @@ module Aozorasearch
     def initialize(row)
       @id                 = row[0]
       @title              = row[1]
-      @kana               = row[2]
+      @title_kana         = row[2]
       @subtitle           = row[4]
       @classification     = row[8]
       @orthography        = row[9]
