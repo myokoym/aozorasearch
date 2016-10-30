@@ -1,8 +1,6 @@
+%p= "#{@paginated_books.n_records} books"
 - if @paginated_books.total_pages > 1
   = paginate(@paginated_books)
-- else
-  %br
-%p= "#{@paginated_books.n_records} books"
 %ul
   - @paginated_books.each do |book|
     %li
