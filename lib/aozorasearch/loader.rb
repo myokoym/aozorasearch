@@ -81,8 +81,15 @@ module Aozorasearch
           content += node.text
         end
       end
-      if book.author_birthdate
-        age_group = book.author_birthdate.split(/-/).first.sub(/\d\z/, "0")
+      unless book.author_birthdate.empty?
+        age = book.author_birthdate.split(/-/).first
+        if age
+          age_group = age.sub(/\d\z/, "0")
+        elsif /紀元前/ =~ book.author_birthdate
+          age_group = "紀元前"
+        else
+          age_group = "????"
+        end
       else
         age_group = "????"
       end
