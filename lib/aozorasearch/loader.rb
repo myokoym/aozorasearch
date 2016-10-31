@@ -83,6 +83,9 @@ module Aozorasearch
       end
       unless book.author_birthdate.empty?
         age = book.author_birthdate.split(/-/).first
+        if /\A\d{1,3}\z/ =~ age
+          age = sprintf("%04d", age)
+        end
         if age
           age_group = age.sub(/\d\z/, "0")
         elsif /紀元前/ =~ book.author_birthdate
