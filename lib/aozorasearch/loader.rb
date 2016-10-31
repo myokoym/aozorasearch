@@ -82,7 +82,7 @@ module Aozorasearch
         end
       end
       if book.author_birthdate
-        age_group = book.author_birthdate[0..3].sub(/\d\z/, "0")
+        age_group = book.author_birthdate.split(/-/).first.sub(/\d\z/, "0")
       else
         age_group = "????"
       end
