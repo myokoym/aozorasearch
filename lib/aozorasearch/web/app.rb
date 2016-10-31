@@ -81,6 +81,7 @@ module Aozorasearch
           options[:ndc2] = params[:ndc2] if params[:ndc2]
           options[:ndc3] = params[:ndc3] if params[:ndc3]
           options[:ndc] = params[:ndc] if params[:ndc]
+          options[:age_group] = params[:age_group] if params[:age_group]
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)
