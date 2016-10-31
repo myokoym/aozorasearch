@@ -96,6 +96,30 @@ module Aozorasearch
           @paginated_books
         end
 
+        def params_to_description
+          words = []
+          if params[:author_id]
+            words << "著者ID:#{params[:author_id]}"
+          end
+          if params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]
+            words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]}"
+          end
+          if params[:orthography]
+            words << params[:orthography]
+          end
+          if params[:copyrighted]
+            words << "著作権#{params[:copyrighted]}"
+          end
+          if words.empty?
+            ""
+          else
+            words.collect! do |word|
+              "「#{word}」"
+            end
+            "（#{words.join}で絞り込み中）"
+          end
+        end
+
         def grouping(table)
           key = "author"
           table.group(key).sort_by {|item| item.n_sub_records }.reverse
