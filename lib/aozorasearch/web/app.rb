@@ -50,6 +50,11 @@ module Aozorasearch
       end
 
       get "/search" do
+        if params[:reset_params]
+          params.reject! do |key, _value|
+            key != "word"
+          end
+        end
         search_and_paginate
         haml :index
       end

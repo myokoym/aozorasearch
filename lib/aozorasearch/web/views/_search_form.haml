@@ -1,3 +1,7 @@
 %form{action: url("/search", false, true), method: :get}
   %input{type: "textarea", name: "word", size: 20, value: params[:word]}
+  - params.each do |key, value|
+    - next if key == "word"
+    %input{type: "hidden", name: key, value: value}
   %input{type: "submit", value: "検索"}
+  %input{type: "checkbox", name: "reset_params", value: "1"} 検索条件をリセット
