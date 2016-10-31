@@ -64,6 +64,9 @@ module Aozorasearch
         elsif options[:ndc1]
           conditions << (record.ndc1._key == options[:ndc1])
         end
+        if options[:age_group]
+          conditions << (record.age_group._key == options[:age_group])
+        end
         unless words.empty?
           match_target = record.match_target do |match_record|
               (match_record.index('Terms.Books_title') * 10) |

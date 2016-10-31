@@ -81,6 +81,11 @@ module Aozorasearch
           content += node.text
         end
       end
+      if book.author_birthdate
+        age_group = book.author_birthdate[0..3].sub(/\d\z/, "0")
+      else
+        age_group = "????"
+      end
       Groonga["Books"].add(
         book.id,
         title: title,
@@ -94,6 +99,7 @@ module Aozorasearch
         ndc1: book.ndc1,
         ndc2: book.ndc2,
         ndc3: book.ndc3,
+        age_group: age_group,
       )
     end
   end

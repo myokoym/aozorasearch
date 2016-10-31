@@ -126,6 +126,10 @@ module Aozorasearch
           table.short_text("label")
         end
 
+        schema.create_table("AgeGroup",
+                            :type => :hash) do |table|
+        end
+
         schema.create_table("Books",
                             :type => :hash) do |table|
           table.short_text("title")
@@ -139,6 +143,7 @@ module Aozorasearch
           table.reference("ndc1", "NdcMaster", type: :vector)
           table.reference("ndc2", "NdcMaster", type: :vector)
           table.reference("ndc3", "NdcMaster", type: :vector)
+          table.reference("age_group", "AgeGroup")
         end
 
         schema.create_table("Terms",
