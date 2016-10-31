@@ -16,7 +16,7 @@
     %br
 %br
 - @books.group("age_group").sort([["_key"]]).each do |age_group|
-  = link_to("#{age_group._key}年代生まれ (#{age_group.n_sub_records})", url(["/search", drilled_params(age_group: age_group._key)].join("?")))
+  = link_to("#{age_group._key.sub(/\A0+/, "")}年代生まれ (#{age_group.n_sub_records})", url(["/search", drilled_params(age_group: age_group._key)].join("?")))
   %br
 %br
 - @books.group("orthography").each do |orthography|

@@ -106,7 +106,7 @@ module Aozorasearch
             words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]}"
           end
           if params[:age_group]
-            words << "#{params[:age_group]}年代生まれの作家"
+            words << "#{params[:age_group].sub(/\A0+/, "")}年代生まれの作家"
           end
           if params[:orthography]
             words << params[:orthography]
