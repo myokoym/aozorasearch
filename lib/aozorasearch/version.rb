@@ -17,5 +17,5 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 module Aozorasearch
-  VERSION = "0.0.6"
+  VERSION = "0.0.7"
 end
