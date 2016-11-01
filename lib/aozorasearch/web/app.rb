@@ -89,6 +89,7 @@ module Aozorasearch
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)
+          @last_update_time = File.mtime(database.db_path)
           searcher = GroongaSearcher.new
           @books = searcher.search(database, words, options)
           @snippet = searcher.snippet

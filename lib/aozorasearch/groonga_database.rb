@@ -95,6 +95,10 @@ module Aozorasearch
       @books ||= Groonga["Books"]
     end
 
+    def db_path
+      @database.path
+    end
+
     private
     def reset_context(encoding)
       Groonga::Context.default_options = {:encoding => encoding}
