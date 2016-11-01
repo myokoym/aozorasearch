@@ -18,6 +18,11 @@
     = link_to("NDC #{ndc1._key} #{ndc1.label} (#{ndc1.n_sub_records})", url(["/search", drilled_params(ndc1: ndc1._key)].join("?")))
     %br
 %br
+- @books.group("kids").each do |kids|
+  - if kids._key
+    = link_to("児童書 (#{kids.n_sub_records})", url(["/search", drilled_params(kids: kids._key)].join("?")))
+    %br
+%br
 - @books.group("age_group").sort([["_key"]]).each do |age_group|
   = link_to("#{age_group._key.sub(/\A0+/, "")}年代生まれ (#{age_group.n_sub_records})", url(["/search", drilled_params(age_group: age_group._key)].join("?")))
   %br

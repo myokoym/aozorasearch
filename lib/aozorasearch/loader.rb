@@ -115,6 +115,7 @@ module Aozorasearch
         ndc2: book.ndc2,
         ndc3: book.ndc3,
         age_group: age_group,
+        kids: book.kids?,
       )
     end
   end

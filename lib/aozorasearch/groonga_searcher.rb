@@ -67,6 +67,9 @@ module Aozorasearch
         if options[:age_group]
           conditions << (record.age_group._key == options[:age_group])
         end
+        if options[:kids]
+          conditions << (record.kids == options[:kids])
+        end
         unless words.empty?
           match_target = record.match_target do |match_record|
               (match_record.index('Terms.Books_title') * 10) |

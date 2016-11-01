@@ -144,6 +144,7 @@ module Aozorasearch
           table.reference("ndc2", "NdcMaster", type: :vector)
           table.reference("ndc3", "NdcMaster", type: :vector)
           table.reference("age_group", "AgeGroup")
+          table.bool("kids")
         end
 
         schema.create_table("Terms",

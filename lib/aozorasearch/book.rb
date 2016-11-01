@@ -62,7 +62,12 @@ module Aozorasearch
         @ndc1 = @ndc.map {|ndc| ndc[-3] + "00" }.uniq
         @ndc2 = @ndc.map {|ndc| ndc[-3..-2] + "0" }.uniq
         @ndc3 = @ndc.map {|ndc| ndc[-3..-1] }.uniq
+        @kids = @ndc.any? {|ndc| /\AK/ =~ ndc }
       end
+    end
+
+    def kids?
+      @kids
     end
   end
 end

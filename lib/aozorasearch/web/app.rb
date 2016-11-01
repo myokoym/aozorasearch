@@ -82,6 +82,7 @@ module Aozorasearch
           options[:ndc3] = params[:ndc3] if params[:ndc3]
           options[:ndc] = params[:ndc] if params[:ndc]
           options[:age_group] = params[:age_group] if params[:age_group]
+          options[:kids] = params[:kids] if params[:kids]
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)
@@ -104,6 +105,9 @@ module Aozorasearch
           end
           if params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]
             words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]}"
+          end
+          if params[:kids]
+            words << "児童書"
           end
           if params[:age_group]
             words << "#{params[:age_group].sub(/\A0+/, "")}年代生まれの作家"
