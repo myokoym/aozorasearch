@@ -46,6 +46,8 @@ module Aozorasearch
     option :parallel, :type => :boolean, :desc => "run on multiple processes"
     def load
       GroongaDatabase.new.open(@database_dir) do |database|
+        ndc_path = "data/ndc-simple.json"
+        load_ndc(ndc_path) if File.file?(ndc_path)
         Loader.new.load(options)
       end
     end
