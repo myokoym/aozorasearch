@@ -10,7 +10,7 @@ module Aozorasearch
     attr_reader :ndc3
     attr_reader :orthography
     attr_reader :copyrighted
-    attr_reader :created_date
+    attr_reader :published_date
     attr_reader :updated_date
     attr_reader :card_url
     attr_reader :author_id
@@ -35,7 +35,7 @@ module Aozorasearch
       @classification     = row[8]
       @orthography        = row[9]
       @copyrighted        = row[10]
-      @created_date       = row[11]
+      @published_date     = row[11]
       @updated_date       = row[12]
       @card_url           = row[13]
       @author_id          = row[14]

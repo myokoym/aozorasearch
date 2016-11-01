@@ -40,7 +40,7 @@ module Aozorasearch
       end
 
       load_proc = lambda do |book|
-        load_book(book)
+        load_book(book, options)
       end
 
       if options[:parallel]
@@ -51,7 +51,12 @@ module Aozorasearch
     end
 
     private
-    def load_book(book)
+    def load_book(book, options={})
+      if options[:diff]
+        updated_date = [book.published_date, book.updated_date].max
+        return if updated_date < options[:diff]
+      end
+
       author = Groonga["Authors"][book.author_id]
       unless author
         author = Groonga["Authors"].add(

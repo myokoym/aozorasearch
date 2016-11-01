@@ -44,10 +44,17 @@ module Aozorasearch
 
     desc "load", "Load all books."
     option :parallel, :type => :boolean, :desc => "run on multiple processes"
+    option :diff, :type => :string, :desc => "update only difference [YYYY-MM-DD]"
     def load
       GroongaDatabase.new.open(@database_dir) do |database|
         ndc_path = "data/ndc-simple.json"
-        load_ndc(ndc_path) if File.file?(ndc_path)
+        if !options[:diff] && File.file?(ndc_path)
+          File.open(ndc_path) do |file|
+            JSON.load(file).each do |id, label|
+              Groonga["NdcMaster"].add(id, label: label)
+            end
+          end
+        end
         Loader.new.load(options)
       end
     end
