@@ -43,8 +43,8 @@ module Aozorasearch
     end
 
     desc "load", "Load all books."
-    option :parallel, :type => :boolean, :desc => "run on multiple processes"
-    option :diff, :type => :string, :desc => "update only difference [YYYY-MM-DD]"
+    option :parallel, type: :boolean, desc: "run on multiple processes"
+    option :diff, type: :string, desc: "update only difference [YYYY-MM-DD]"
     def load
       GroongaDatabase.new.open(@database_dir) do |database|
         ndc_path = "data/ndc-simple.json"
@@ -88,7 +88,7 @@ module Aozorasearch
     end
 
     desc "start", "Start web server."
-    option :silent, :type => :boolean, :desc => "Don't open in browser"
+    option :silent, type: :boolean, desc: "Don't open in browser"
     def start
       web_server_thread = Thread.new { Aozorasearch::Web::App.run! }
       Launchy.open("http://localhost:4567") unless options[:silent]
