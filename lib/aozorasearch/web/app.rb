@@ -94,9 +94,16 @@ module Aozorasearch
           @snippet = searcher.snippet
           page = (params[:page] || 1).to_i
           size = (params[:n_per_page] || 20).to_i
-          @paginated_books = @books.paginate([["_score", :desc]],
-                                             page: page,
-                                             size: size)
+          begin
+            @paginated_books = @books.paginate([["_score", :desc]],
+                                               page: page,
+                                               size: size)
+          rescue Groonga::TooLargePage
+            params.delete(:page)
+            @paginated_books = @books.paginate([["_score", :desc]],
+                                               page: 1,
+                                               size: size)
+          end
           @paginated_books.extend(PaginationProxy)
           @paginated_books
         end
