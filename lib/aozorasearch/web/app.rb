@@ -38,6 +38,9 @@ module Aozorasearch
     end
 
     class App < Sinatra::Base
+      I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
+      I18n.available_locales = [:ja, :en, :"ja-JP"]
+      I18n.default_locale = :ja
       helpers Kaminari::Helpers::SinatraHelpers
       register Sinatra::CrossOrigin
 
