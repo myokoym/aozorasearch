@@ -42,7 +42,7 @@ module Aozorasearch
       puts Aozorasearch::VERSION
     end
 
-    desc "load", "Load all books."
+    desc "load", "Load books."
     option :parallel, type: :boolean, desc: "run on multiple processes"
     option :diff, type: :string, desc: "update only difference [YYYY-MM-DD]"
     def load
