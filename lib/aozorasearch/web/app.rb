@@ -57,6 +57,7 @@ module Aozorasearch
           params.reject! do |key, _value|
             key != "word"
           end
+          redirect to('/search?' + params.to_param)
         end
         search_and_paginate
         haml :index
