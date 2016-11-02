@@ -1,5 +1,5 @@
 %form{action: url("/search", false, true), method: :get}
-  %input{type: "search", name: "word", size: 20, value: params[:word]}
+  %input(type="search" name="word" size=20 value="#{params[:word]}" autofocus)
   - params.each do |key, value|
     - next if /\A(?:word|page)\z/ =~ key
     %input{type: "hidden", name: key, value: value}
