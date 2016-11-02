@@ -90,7 +90,6 @@ module Aozorasearch
 
           database = GroongaDatabase.new
           database.open(Command.new.database_dir)
-          @last_update_time = File.mtime(database.db_path)
           searcher = GroongaSearcher.new
           @books = searcher.search(database, words, options)
           @snippet = searcher.snippet
@@ -184,6 +183,20 @@ module Aozorasearch
           end
 
           snippet.execute(selected_books.first.content)
+        end
+
+        def last_update_time
+          path = File.join(settings.root, "..", "..", "..", "aozorabunko")
+          if File.exist?(path)
+            File.mtime(path)
+          else
+            nil
+          end
+        end
+
+        def last_update_date
+          return unless last_update_time
+          last_update_time.strftime("%Y-%m-%d")
         end
       end
     end

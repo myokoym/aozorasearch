@@ -1,6 +1,6 @@
 %p
-  - if @last_update_time
-    最終更新日: #{@last_update_time.strftime("%Y-%m-%d")}
+  - if last_update_date
+    最終更新日: #{last_update_date}
     \/
   Powered by
   = link_to("Groonga #{groonga_version}", "http://groonga.org/ja/")
