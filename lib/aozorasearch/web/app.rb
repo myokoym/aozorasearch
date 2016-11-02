@@ -198,6 +198,14 @@ module Aozorasearch
           return unless last_update_time
           last_update_time.strftime("%Y-%m-%d")
         end
+
+        def page_title
+          title = "Aozorasearch 青空文庫検索"
+          if params[:word]
+            title = "#{params[:word]} - #{title}"
+          end
+          title
+        end
       end
     end
   end
