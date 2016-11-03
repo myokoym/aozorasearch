@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aozorasearch (0.0.9)
+    aozorasearch (0.1.0)
       haml
       kaminari
       launchy
