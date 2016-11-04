@@ -5,7 +5,7 @@
   - @paginated_books.each do |book|
     %li
       %h4
-        = link_to("#{book.title} - #{book.author.name}", book.card_url)
+        = link_to("#{book.title} - #{book.authors.map(&:name).join(" ")}", book.card_url)
       - if params["word"] && book.content
         %p
           = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe

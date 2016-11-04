@@ -101,11 +101,17 @@ module Aozorasearch
       else
         age_group = "????"
       end
+      if Groonga["Books"][book.id]
+        authors = Groonga["Books"][book.id].authors
+      else
+        authors = []
+      end
+      authors << author
       Groonga["Books"].add(
         book.id,
         title: title,
         content: content,
-        author: author,
+        authors: authors,
         card_url: book.card_url,
         html_url: book.html_url,
         orthography: book.orthography,

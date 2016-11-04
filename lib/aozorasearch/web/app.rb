@@ -140,7 +140,7 @@ module Aozorasearch
         end
 
         def grouping(table)
-          key = "author"
+          key = "authors"
           table.group(key).sort_by {|item| item.n_sub_records }.reverse
         end
 

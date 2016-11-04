@@ -47,7 +47,7 @@ module Aozorasearch
       selected_books = books.select do |record|
         conditions = []
         if options[:author_id]
-          conditions << (record.author._key == options[:author_id])
+          conditions << (record.authors =~ options[:author_id])
         end
         if options[:orthography]
           conditions << (record.orthography._key == options[:orthography])
@@ -77,7 +77,7 @@ module Aozorasearch
           end
           full_text_search = words.collect {|word|
             (match_target =~ word) |
-              (record.author.name =~ word)
+              (record.authors.name =~ word)
           }.inject(&:&)
           conditions << full_text_search
         end

@@ -138,7 +138,7 @@ module Aozorasearch
                             :type => :hash) do |table|
           table.short_text("title")
           table.text("content")
-          table.reference("author", "Authors")
+          table.reference("authors", "Authors", type: :vector)
           table.short_text("card_url")
           table.short_text("html_url")
           table.reference("orthography", "Orthographies")
@@ -161,7 +161,7 @@ module Aozorasearch
         end
 
         schema.change_table("Authors") do |table|
-          table.index("Books.author")
+          table.index("Books.authors")
         end
       end
     end
