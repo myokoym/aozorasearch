@@ -22,7 +22,7 @@
   - if kids._key
     = link_to("児童書 (#{kids.n_sub_records})", url(["/search", drilled_params(kids: kids._key)].join("?")))
     %br
-%br
+    %br
 - @books.group("orthography").each do |orthography|
   = link_to("#{orthography._key} (#{orthography.n_sub_records})", url(["/search", drilled_params(orthography: orthography._key)].join("?")))
   %br
