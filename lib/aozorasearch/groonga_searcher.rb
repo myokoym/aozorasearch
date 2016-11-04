@@ -56,13 +56,13 @@ module Aozorasearch
           conditions << (record.copyrighted._key == options[:copyrighted])
         end
         if options[:ndc]
-          conditions << (record.ndc._key == options[:ndc])
+          conditions << (record.ndc =~ options[:ndc])
         elsif options[:ndc3]
-          conditions << (record.ndc3._key == options[:ndc3])
+          conditions << (record.ndc3 =~ options[:ndc3])
         elsif options[:ndc2]
-          conditions << (record.ndc2._key == options[:ndc2])
+          conditions << (record.ndc2 =~ options[:ndc2])
         elsif options[:ndc1]
-          conditions << (record.ndc1._key == options[:ndc1])
+          conditions << (record.ndc1 =~ options[:ndc1])
         end
         if options[:age_group]
           conditions << (record.age_group._key == options[:age_group])
