@@ -23,14 +23,14 @@
     = link_to("児童書 (#{kids.n_sub_records})", url(["/search", drilled_params(kids: kids._key)].join("?")))
     %br
 %br
-- @books.group("age_group").sort([["_key"]]).each do |age_group|
-  = link_to("#{age_group._key.sub(/\A0+/, "")}年代生まれ (#{age_group.n_sub_records})", url(["/search", drilled_params(age_group: age_group._key)].join("?")))
-  %br
-%br
 - @books.group("orthography").each do |orthography|
   = link_to("#{orthography._key} (#{orthography.n_sub_records})", url(["/search", drilled_params(orthography: orthography._key)].join("?")))
   %br
 %br
 - @books.group("copyrighted").each do |copyrighted|
   = link_to("著作権#{copyrighted._key} (#{copyrighted.n_sub_records})", url(["/search", drilled_params(copyrighted: copyrighted._key)].join("?")))
+  %br
+%br
+- @books.group("age_group").sort([["_key"]]).each do |age_group|
+  = link_to("#{age_group._key.sub(/\A0+/, "")}年代生まれ (#{age_group.n_sub_records})", url(["/search", drilled_params(age_group: age_group._key)].join("?")))
   %br
