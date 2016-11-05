@@ -111,7 +111,7 @@ module Aozorasearch
         book.id,
         title: title,
         content: content,
-        authors: authors,
+        authors: authors.uniq,
         card_url: book.card_url,
         html_url: book.html_url,
         orthography: book.orthography,
