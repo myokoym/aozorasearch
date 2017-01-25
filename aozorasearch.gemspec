@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("sinatra-cross_origin")
   spec.add_runtime_dependency("padrino-helpers")
   spec.add_runtime_dependency("kaminari")
+  spec.add_runtime_dependency("kaminari-sinatra")
   spec.add_runtime_dependency("haml")
   spec.add_runtime_dependency("launchy")
   spec.add_runtime_dependency("racknga")
