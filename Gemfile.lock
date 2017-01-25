@@ -4,6 +4,7 @@ PATH
     aozorasearch (0.1.1)
       haml
       kaminari
+      kaminari-sinatra
       launchy
       padrino-helpers
       parallel
@@ -18,65 +19,86 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionpack (4.2.7.1)
-      actionview (= 4.2.7.1)
-      activesupport (= 4.2.7.1)
-      rack (~> 1.6)
-      rack-test (~> 0.6.2)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
-      rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (4.2.7.1)
-      activesupport (= 4.2.7.1)
+    actionview (5.0.1)
+      activesupport (= 5.0.1)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    activesupport (4.2.7.1)
+    activemodel (5.0.1)
+      activesupport (= 5.0.1)
+    activerecord (5.0.1)
+      activemodel (= 5.0.1)
+      activesupport (= 5.0.1)
+      arel (~> 7.0)
+    activesupport (5.0.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.4.0)
-    archive-zip (0.8.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
+    archive-zip (0.9.0)
       io-like (~> 0.3.0)
+    arel (7.1.4)
     backports (3.6.8)
-    builder (3.2.2)
+    builder (3.2.3)
+    concurrent-ruby (1.0.4)
     erubis (2.7.0)
     gqtp (1.0.6)
-    groonga-client (0.3.1)
+    groonga-client (0.4.0)
       gqtp (>= 1.0.4)
       groonga-command (>= 1.2.8)
+      groonga-command-parser (>= 1.0.7)
       hashie
-    groonga-command (1.2.9)
+    groonga-command (1.3.2)
       json
+    groonga-command-parser (1.0.9)
+      groonga-command (>= 1.3.2)
+      json-stream
     haml (4.0.7)
       tilt
     hashie (3.4.6)
     i18n (0.7.0)
     io-like (0.3.0)
-    json (1.8.3)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
+    json (2.0.3)
+    json-stream (0.2.1)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
+    kaminari-sinatra (1.0.1)
+      actionview
+      kaminari-core (~> 1.0)
+      padrino-helpers
+      sinatra
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     multi_json (1.12.1)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
-    padrino-helpers (0.13.3.2)
+    padrino-helpers (0.13.3.3)
       i18n (~> 0.6, >= 0.6.7)
-      padrino-support (= 0.13.3.2)
+      padrino-support (= 0.13.3.3)
       tilt (>= 1.4.1, < 3)
-    padrino-support (0.13.3.2)
+    padrino-support (0.13.3.3)
       activesupport (>= 3.1)
-    parallel (1.9.0)
+    parallel (1.10.0)
     pkg-config (1.1.7)
-    rack (1.6.4)
+    public_suffix (2.0.5)
+    rack (1.6.5)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -84,16 +106,13 @@ GEM
     racknga (0.9.3)
       rack
       rroonga
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.7)
-      activesupport (>= 4.2.0.beta, < 5.0)
-      nokogiri (~> 1.6.0)
-      rails-deprecated_sanitizer (>= 1.0.1)
+    rails-dom-testing (2.0.2)
+      activesupport (>= 4.2.0, < 6.0)
+      nokogiri (~> 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rake (11.3.0)
-    rroonga (6.0.9)
+    rake (12.0.0)
+    rroonga (6.1.3)
       archive-zip
       groonga-client (>= 0.0.3)
       json
@@ -111,7 +130,7 @@ GEM
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
     sinatra-cross_origin (0.4.0)
-    thor (0.19.1)
+    thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
     tzinfo (1.2.2)
@@ -126,4 +145,4 @@ DEPENDENCIES
   rake
 
 BUNDLED WITH
-   1.12.5
+   1.14.3
