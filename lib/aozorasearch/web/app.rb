@@ -17,6 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 require "aozorasearch"
+require "active_support/core_ext/hash"
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/cross_origin"
