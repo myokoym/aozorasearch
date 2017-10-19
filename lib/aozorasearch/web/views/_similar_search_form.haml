@@ -1,0 +1,3 @@
+%form{action: url("/similar", false, true), method: :post}
+  %textarea(type="search" name="text" value="#{params[:text]}" autofocus)
+  %input{type: "submit", value: "検索"}

@@ -1,0 +1,22 @@
+%p= link_to("キーワード検索", ".")
+%h2 類似文書検索（お試し）
+%form{action: url("/similar", false, true), method: :post}
+  %textarea(type="search" name="text" value="#{params[:text]}" autofocus)
+  %input{type: "submit", value: "検索"}
+%br
+- if @books
+  .row
+    .col-sm-7
+      %ul
+        - @books.each do |book|
+          %li
+            %h4
+              = link_to("#{book.title} - #{book.authors.map(&:name).join(" ")}", book.card_url)
+            %p
+              [
+              = link_to("いますぐXHTML版で読む", book.html_url)
+              ]
+              [
+              = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
+              ]
+            %br

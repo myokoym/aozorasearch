@@ -42,6 +42,18 @@ module Aozorasearch
       sorted_books
     end
 
+    def similar_search_by_text(database, text)
+      books = database.books
+      similar_books = books.select do |record|
+        record.content.similar_search(text)
+      end
+      sorted_similar_books = similar_books.sort([{
+                                            :key => "_score",
+                                            :order => "descending",
+                                          }])
+      sorted_similar_books
+    end
+
     private
     def select_books(books, words, options)
       selected_books = books.select do |record|

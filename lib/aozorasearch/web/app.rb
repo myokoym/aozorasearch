@@ -71,6 +71,19 @@ module Aozorasearch
         json books.collect {|book| book.attributes }
       end
 
+      get "/similar" do
+        haml :similar
+      end
+
+      post "/similar" do
+        database = GroongaDatabase.new
+        database.open(Command.new.database_dir)
+        searcher = GroongaSearcher.new
+        text = params[:text] || ""
+        @books = searcher.similar_search_by_text(database, text).take(50)
+        haml :similar
+      end
+
       helpers do
         def search_and_paginate
           if params[:word]
