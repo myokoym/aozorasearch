@@ -20,4 +20,5 @@ The full-text search system for [Aozora Bunko](http://www.aozora.gr.jp/) by [Gro
 
 ## License
 
-Ruby Code (.rb): LGPL 2.1 or later. See LICENSE.txt for details.
+* Ruby Code (.rb): LGPL 2.1 or later. See LICENSE.txt for details.
+* Data in aozorabunko (submodule): Licensed by [青空文庫 (Aozora Bunko)](http://www.aozora.gr.jp/) under [CC BY 2.1 JP](https://creativecommons.org/licenses/by/2.1/jp/).
