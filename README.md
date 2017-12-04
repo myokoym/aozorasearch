@@ -2,6 +2,10 @@
 
 The full-text search system for [Aozora Bunko](http://www.aozora.gr.jp/) by [Groonga](http://groonga.org/ja/).
 
+## Document
+
+* [青空文庫をNDC等で絞り込みつつ全文検索できるWebサイト「Aozorasearch」の紹介 - Qiita](https://qiita.com/myokoym/items/a97f6901d4fa12bb8cb9)
+
 ## Usage
 
 ### Prepare
