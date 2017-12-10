@@ -5,8 +5,8 @@
     %title= "#{page_title}"
     %meta(name="viewport" content="width=device-width" initial-scale="1.0")
     - if url_for(only_path: true) == "/"
-      %meta(name="description" content="青空文庫の本文を検索できるサイト。キーワードの前後を部分表示します。著者やNDC、仮名遣いなどでの絞り込み機能付き。全文検索エンジンとしてGroongaを使用。")
-      %meta(name="keywords" content="青空文庫,全文検索")
+      %meta(name="description" content="青空文庫の本文を検索できるサイト。キーワードの前後を部分表示します。著者やNDC、児童書、仮名遣い、著作権の有無などでの絞り込み機能付き。全文検索エンジンとしてGroongaを使用。")
+      %meta(name="keywords" content="青空文庫,検索,全文検索")
     - else
       %meta(name="robots" content="noindex")
     %link(href="#{@sub_url}vendor/bootstrap/css/bootstrap.min.css"
