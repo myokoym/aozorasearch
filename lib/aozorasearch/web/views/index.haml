@@ -12,3 +12,8 @@
         = render :_authors, layout: false
 %p
   = render :_faq, layout: false
+- if url_for(only_path: true) != "/"
+  %p
+    [
+    = link_to("ページ上部に移動", "#")
+    ]
