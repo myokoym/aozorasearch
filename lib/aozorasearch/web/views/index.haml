@@ -1,12 +1,10 @@
 - if url_for(only_path: true) != "/"
-  %div.visible-xs
-    = render :_faq, layout: false
-  %div.hidden-xs
-    %p
-      [
-      = link_to("よくある質問（FAQ）", "#faq")
-      ]
-%p#search-form
+  %p
+    [
+    = link_to("Aozorasearch FAQ", "#faq")
+    ]
+    （よくある質問）
+%p
   = render :_search_form, layout: false
 - if @books
   .row
@@ -19,17 +17,10 @@
       .col-sm-2
         %p#authors
           = render :_authors, layout: false
+%p
+  = render :_faq, layout: false
 - if url_for(only_path: true) != "/"
-  %div.hidden-xs
-    = render :_faq, layout: false
-    %p
-      [
-      = link_to("ページ上部に移動", "#")
-      ]
-  %p.visible-xs
+  %p
     [
-    = link_to("よくある質問（FAQ）", "#")
+    = link_to("ページ上部に移動", "#")
     ]
-- else
-  %div
-    = render :_faq, layout: false
