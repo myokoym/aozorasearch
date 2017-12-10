@@ -50,7 +50,7 @@ module Aozorasearch
       end
 
       before do
-        @sub_url = ""
+        @sub_url = ENV["AOZORASEARCH_SUB_URL"]
       end
 
       get "/" do

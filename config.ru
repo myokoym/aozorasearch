@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(lib_dir)
 require "aozorasearch/web/app"
 
 ENV["AOZORASEARCH_HOME"] ||= File.join(base_dir, ".aozorasearch")
+ENV["AOZORASEARCH_SUB_URL"] = ""
 
 if ENV["AOZORASEARCH_ENABLE_CACHE"]
   require "racknga"
