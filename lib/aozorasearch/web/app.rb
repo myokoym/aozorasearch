@@ -214,7 +214,7 @@ module Aozorasearch
         end
 
         def page_title
-          title = "Aozorasearch 青空文庫検索"
+          title = "Aozorasearch 青空文庫全文検索"
           if params[:word]
             title = "#{params[:word]}#{params_to_description} - #{title}"
           end
