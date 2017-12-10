@@ -1,3 +1,8 @@
+- if url_for(only_path: true) != "/"
+  %p
+    [
+    = link_to("Aozorasearch FAQ（よくある質問）", "#faq")
+    ]
 %p
   = render :_search_form, layout: false
 - if @books
