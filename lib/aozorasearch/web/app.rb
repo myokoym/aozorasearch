@@ -26,6 +26,8 @@ require "haml"
 require "padrino-helpers"
 require "kaminari/sinatra"
 
+require_relative "aozorasearch-kaminari"
+
 module Aozorasearch
   module Web
     module PaginationProxy
