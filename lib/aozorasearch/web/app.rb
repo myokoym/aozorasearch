@@ -49,6 +49,10 @@ module Aozorasearch
         register Sinatra::Reloader
       end
 
+      before do
+        @sub_url = ""
+      end
+
       get "/" do
         haml :index
       end
