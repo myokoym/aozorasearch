@@ -10,12 +10,13 @@
   .row
     .col-sm-7
       = render :_books, layout: false
-    .col-sm-3
-      %p#conditions
-        = render :_conditions, layout: false
-    .col-sm-2
-      %p#authors
-        = render :_authors, layout: false
+    - unless @books.empty?
+      .col-sm-3
+        %p#conditions
+          = render :_conditions, layout: false
+      .col-sm-2
+        %p#authors
+          = render :_authors, layout: false
 %p
   = render :_faq, layout: false
 - if url_for(only_path: true) != "/"

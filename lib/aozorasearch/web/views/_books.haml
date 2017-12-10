@@ -1,11 +1,12 @@
 %p= "「#{params[:word]}」で検索、 #{@paginated_books.n_records} 件ヒット [#{@paginated_books.start_offset}-#{@paginated_books.end_offset}件を表示]#{params_to_description}"
-%p.visible-xs
-  [
-  = link_to("NDC等で絞り込み", "#conditions")
-  ]
-  [
-  = link_to("著者で絞り込み", "#authors")
-  ]
+- unless @books.empty?
+  %p.visible-xs
+    [
+    = link_to("NDC等で絞り込み", "#conditions")
+    ]
+    [
+    = link_to("著者で絞り込み", "#authors")
+    ]
 - if @paginated_books.total_pages > 1
   = paginate(@paginated_books)
 %ul
