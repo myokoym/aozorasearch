@@ -82,8 +82,10 @@ module Aozorasearch
       end
       main_text_nodes.each do |node|
         case node.node_name
-        when "text", "div", "ruby"
+        when "text", "div"
           content += node.text
+        when "ruby"
+          content += node.at_xpath('.//rb').text
         end
       end
       unless book.author_birthdate.empty?
