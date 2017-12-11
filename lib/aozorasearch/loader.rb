@@ -82,7 +82,7 @@ module Aozorasearch
       end
       main_text_nodes.each do |node|
         case node.node_name
-        when "text"
+        when "text", "div", "ruby"
           content += node.text
         end
       end
