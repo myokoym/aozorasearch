@@ -85,7 +85,10 @@ module Aozorasearch
         when "text", "div"
           content += node.text
         when "ruby"
-          content += node.at_xpath('.//rb').text
+          rb = node.at_xpath('.//rb')
+          if rb
+            content += rb.text
+          end
         end
       end
       unless book.author_birthdate.empty?
