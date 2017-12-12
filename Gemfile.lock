@@ -6,6 +6,7 @@ PATH
       kaminari
       kaminari-sinatra
       launchy
+      nokogiri
       padrino-helpers
       parallel
       racknga

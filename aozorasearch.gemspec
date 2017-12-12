@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency("rroonga", ">= 5.0.0")
+  spec.add_runtime_dependency("nokogiri")
   spec.add_runtime_dependency("thor")
   spec.add_runtime_dependency("parallel")
   spec.add_runtime_dependency("rubyzip")
