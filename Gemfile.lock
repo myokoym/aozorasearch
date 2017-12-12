@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    aozorasearch (0.2.0)
+    aozorasearch (0.2.1)
       haml
       kaminari
       kaminari-sinatra
