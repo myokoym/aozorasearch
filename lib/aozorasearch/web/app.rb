@@ -139,8 +139,12 @@ module Aozorasearch
           if params[:author_id]
             words << "著者ID:#{params[:author_id]}"
           end
-          if params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]
-            words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2]&.[](0..1) || params[:ndc1]&.[](0)}"
+          if params[:ndc3]
+            words << "NDC #{params[:ndc3]} #{ndc_to_label(params[:ndc3])}"
+          elsif params[:ndc2]
+            words << "NDC #{params[:ndc2]&.[](0..1)} #{ndc_to_label(params[:ndc2])}"
+          elsif params[:ndc1]
+            words << "NDC #{params[:ndc1]&.[](0)} #{ndc_to_label(params[:ndc1])}"
           end
           if params[:kids]
             words << "児童書"
