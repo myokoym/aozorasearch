@@ -172,7 +172,7 @@ module Aozorasearch
           "#{author.name} (#{author.n_sub_records})"
         end
 
-        def drilled_params(additional_params)
+        def drilled_params(additional_params, deletion_keys=nil)
           additional_params = Hash[
             additional_params.map do |key, value|
               [key.to_s, value]
@@ -181,6 +181,13 @@ module Aozorasearch
           tmp_params = params.dup
           tmp_params.merge!(additional_params)
           tmp_params.delete("page")
+          if deletion_keys.is_a?(Array)
+            deletion_keys.each do |key|
+              tmp_params.delete(key)
+            end
+          else
+            tmp_params.delete(deletion_keys)
+          end
           tmp_params.to_param
         end
 
