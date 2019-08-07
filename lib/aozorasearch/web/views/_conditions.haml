@@ -1,37 +1,40 @@
-- if params["ndc3"]
-  = link_to("[x] NDC #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1, :ndc2, :ndc3])].join("?")))
-  = " > "
+%p
+  NDC
   %br
-  = link_to("[x] NDC #{params["ndc2"][0..1]} #{ndc_to_label(params["ndc2"])}", url(["/search", drilled_params({}, [:ndc2, :ndc3])].join("?")))
-  = " > "
-  %br
-  - @books.group("ndc3").sort([["_key"]]).each do |ndc3|
-    - next unless /#{params["ndc3"]}/ =~ ndc3._key
-    = link_to("[x] NDC #{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params({}, :ndc3)].join("?")))
+  - if params["ndc3"]
+    = link_to("[x] #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1, :ndc2, :ndc3])].join("?")))
+    = " > "
     %br
-- elsif params["ndc2"]
-  = link_to("[x] NDC #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1, :ndc2])].join("?")))
-  = " > "
-  %br
-  = link_to("[x] NDC #{params["ndc2"][0..1]} #{ndc_to_label(params["ndc2"])}", url(["/search", drilled_params({}, :ndc2)].join("?")))
-  = " > "
-  %br
-  - @books.group("ndc3").sort([["_key"]]).each do |ndc3|
-    - next unless params["ndc2"][0..1] == ndc3._key[0..1]
-    = link_to("NDC #{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params(ndc3: ndc3._key)].join("?")))
+    = link_to("[x] #{params["ndc2"][0..1]} #{ndc_to_label(params["ndc2"])}", url(["/search", drilled_params({}, [:ndc2, :ndc3])].join("?")))
+    = " > "
     %br
-- elsif params["ndc1"]
-  = link_to("[x] NDC #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1])].join("?")))
-  = " > "
-  %br
-  - @books.group("ndc2").sort([["_key"]]).each do |ndc2|
-    - next unless params["ndc1"][0] == ndc2._key[0]
-    = link_to("NDC #{ndc2._key[0..1]} #{ndc2.label} (#{ndc2.n_sub_records})", url(["/search", drilled_params(ndc2: ndc2._key)].join("?")))
+    - @books.group("ndc3").sort([["_key"]]).each do |ndc3|
+      - next unless /#{params["ndc3"]}/ =~ ndc3._key
+      = link_to("[x] #{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params({}, :ndc3)].join("?")))
+      %br
+  - elsif params["ndc2"]
+    = link_to("[x] #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1, :ndc2])].join("?")))
+    = " > "
     %br
-- else
-  - @books.group("ndc1").sort([["_key"]]).each do |ndc1|
-    = link_to("NDC #{ndc1._key[0]} #{ndc1.label} (#{ndc1.n_sub_records})", url(["/search", drilled_params(ndc1: ndc1._key)].join("?")))
+    = link_to("[x] #{params["ndc2"][0..1]} #{ndc_to_label(params["ndc2"])}", url(["/search", drilled_params({}, :ndc2)].join("?")))
+    = " > "
     %br
+    - @books.group("ndc3").sort([["_key"]]).each do |ndc3|
+      - next unless params["ndc2"][0..1] == ndc3._key[0..1]
+      = link_to("#{ndc3._key} #{ndc3.label} (#{ndc3.n_sub_records})", url(["/search", drilled_params(ndc3: ndc3._key)].join("?")))
+      %br
+  - elsif params["ndc1"]
+    = link_to("[x] #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1])].join("?")))
+    = " > "
+    %br
+    - @books.group("ndc2").sort([["_key"]]).each do |ndc2|
+      - next unless params["ndc1"][0] == ndc2._key[0]
+      = link_to("#{ndc2._key[0..1]} #{ndc2.label} (#{ndc2.n_sub_records})", url(["/search", drilled_params(ndc2: ndc2._key)].join("?")))
+      %br
+  - else
+    - @books.group("ndc1").sort([["_key"]]).each do |ndc1|
+      = link_to("#{ndc1._key[0]} #{ndc1.label} (#{ndc1.n_sub_records})", url(["/search", drilled_params(ndc1: ndc1._key)].join("?")))
+      %br
 %br
 - @books.group("kids").each do |kids|
   - if kids._key
