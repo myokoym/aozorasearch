@@ -1,0 +1,5 @@
+- if params.include?(key)
+  = link_to("[x] #{title} (#{object.n_sub_records})", url(["/search", drilled_params({}, key)].join("?")))
+- else
+  = link_to("#{title} (#{object.n_sub_records})", url(["/search", drilled_params(key => object._key)].join("?")))
+%br
