@@ -21,7 +21,7 @@
 - @books.group("kids").each do |kids|
   - if kids._key
     = render :_drilled_record, layout: false, locals: {title: "児童書", key: :kids, object: kids}
-%br
+    %br
 - @books.group("orthography").each do |orthography|
   = render :_drilled_record, layout: false, locals: {title: orthography._key, key: :orthography, object: orthography}
 %br
