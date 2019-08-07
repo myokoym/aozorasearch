@@ -1,3 +1,6 @@
 - grouping(@books).each do |author|
-  = link_to(drilled_label(author), drilled_url(author))
+  - if params.include?(:author_id) && params[:author_id] == author._key
+    = link_to("[x] #{drilled_label(author)}", url(["/search", drilled_params({}, :author_id)].join("?")))
+  - else
+    = link_to(drilled_label(author), drilled_url(author))
   %br
