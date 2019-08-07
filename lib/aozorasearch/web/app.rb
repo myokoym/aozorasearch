@@ -22,6 +22,7 @@ require "sinatra/base"
 require "sinatra/json"
 require "sinatra/cross_origin"
 require "sinatra/reloader"
+require "json"
 require "haml"
 require "padrino-helpers"
 require "kaminari/sinatra"
@@ -53,6 +54,10 @@ module Aozorasearch
 
       before do
         @sub_url = ENV["AOZORASEARCH_SUB_URL"]
+        if params.include?(:ndc1) || params.include?(:ndc2) || params.include?(:ndc3)
+          ndc_data_path = File.join(settings.root, "..", "..", "..", "data", "ndc-simple.json")
+          @ndc_table = JSON.load(File.read(ndc_data_path))
+        end
       end
 
       get "/" do
@@ -135,7 +140,7 @@ module Aozorasearch
             words << "著者ID:#{params[:author_id]}"
           end
           if params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]
-            words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2] || params[:ndc1]}"
+            words << "NDC #{params[:ndc] || params[:ndc3] || params[:ndc2]&.[](0..1) || params[:ndc1]&.[](0)}"
           end
           if params[:kids]
             words << "児童書"
@@ -157,6 +162,11 @@ module Aozorasearch
             end
             "（#{words.join}で絞り込み中）"
           end
+        end
+
+        def ndc_to_label(ndc)
+          return ndc unless @ndc_table
+          @ndc_table[ndc.to_s]
         end
 
         def grouping(table)
