@@ -173,19 +173,6 @@ module Aozorasearch
           @ndc_table[ndc.to_s]
         end
 
-        def grouping(table)
-          key = "authors"
-          table.group(key).sort_by {|item| item.n_sub_records }.reverse
-        end
-
-        def drilled_url(author)
-          url(["/search", drilled_params(author_id: author._key)].join("?"))
-        end
-
-        def drilled_label(author)
-          "#{author.name} (#{author.n_sub_records})"
-        end
-
         def drilled_params(additional_params, deletion_keys=nil)
           additional_params = Hash[
             additional_params.map do |key, value|

@@ -1,6 +1,6 @@
-- grouping(@books).each do |author|
+- @books.group("authors").sort_by {|item| item.n_sub_records }.reverse.each do |author|
   - if params.include?(:author_id) && params[:author_id] == author._key
-    = link_to("[x] #{drilled_label(author)}", url(["/search", drilled_params({}, :author_id)].join("?")))
+    = link_to("[x] #{author.name} (#{author.n_sub_records})", url(["/search", drilled_params({}, :author_id)].join("?")))
   - else
-    = link_to(drilled_label(author), drilled_url(author))
+    = link_to(drilled_label(author), url(["/search", drilled_params(author_id: author._key)].join("?")))
   %br
