@@ -132,12 +132,15 @@ module Aozorasearch
           end
           @paginated_books.extend(PaginationProxy)
           @paginated_books
+          if params[:author_id]
+            @drilled_author_name = database.authors[params[:author_id]]&.name
+          end
         end
 
         def params_to_description
           words = []
           if params[:author_id]
-            words << "著者ID:#{params[:author_id]}"
+            words << "著者: #{@drilled_author_name || params[:author_id]}"
           end
           if params[:ndc3]
             words << "NDC #{params[:ndc3]} #{ndc_to_label(params[:ndc3])}"
