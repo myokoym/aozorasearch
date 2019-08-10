@@ -1,5 +1,5 @@
 %p
-  NDC
+  NDC（分類）
   %br
   - if params["ndc3"]
     = link_to("[x] #{params["ndc1"][0]} #{ndc_to_label(params["ndc1"])}", url(["/search", drilled_params({}, [:ndc1, :ndc2, :ndc3])].join("?")))
