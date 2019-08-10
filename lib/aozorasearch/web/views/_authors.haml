@@ -2,5 +2,5 @@
   - if params.include?(:author_id) && params[:author_id] == author._key
     = link_to("[x] #{author.name} (#{author.n_sub_records})", url(["/search", drilled_params({}, :author_id)].join("?")))
   - else
-    = link_to(drilled_label(author), url(["/search", drilled_params(author_id: author._key)].join("?")))
+    = link_to("#{author.name} (#{author.n_sub_records})", url(["/search", drilled_params(author_id: author._key)].join("?")))
   %br
