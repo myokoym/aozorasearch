@@ -84,8 +84,10 @@ module Aozorasearch
         end
         unless words.empty?
           match_target = record.match_target do |match_record|
-              (match_record.index('Terms.Books_title') * 100) |
-              (match_record.index('Terms.Books_content'))
+              (match_record.index("TermsMecab.Books_title") * 1000) |
+              (match_record.index("TermsMecab.Books_content") * 20) |
+              (match_record.index("Terms.Books_title") * 10) |
+              (match_record.index("Terms.Books_content"))
           end
           full_text_search = words.collect {|word|
             (match_target =~ word) |

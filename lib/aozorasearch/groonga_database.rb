@@ -160,6 +160,14 @@ module Aozorasearch
           table.index("Authors.name")
         end
 
+        schema.create_table("TermsMecab",
+                            :type => :patricia_trie,
+                            :normalizer => "NormalizerAuto",
+                            :default_tokenizer => "TokenMecab") do |table|
+          table.index("Books.title")
+          table.index("Books.content")
+        end
+
         schema.change_table("Authors") do |table|
           table.index("Books.authors")
         end
