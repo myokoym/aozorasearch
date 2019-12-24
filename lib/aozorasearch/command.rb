@@ -71,7 +71,7 @@ module Aozorasearch
         searcher = GroongaSearcher.new
         sorted_books = searcher.search(database, words, options)
         sorted_books.each do |book|
-          puts "#{book.title} - #{book.author.name}"
+          puts "#{book.title} - #{book.authors.map(&:name).join(" ")}"
         end
       end
     end
