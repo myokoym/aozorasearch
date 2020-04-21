@@ -1,6 +1,6 @@
 %p= link_to("戻る", ".")
 %h3 ブックマーク一覧
-- if @books
+- if @books && !@books.empty?
   %ul
     - @books.each do |book|
       - unless book
