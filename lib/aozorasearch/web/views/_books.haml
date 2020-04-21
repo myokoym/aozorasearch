@@ -14,9 +14,13 @@
     %li
       %h4
         = link_to(book.title, book.card_url)
-      - authors = book.authors.map(&:name).join(" ")
-      - unless authors.blank?
-        %h5= authors
+      %h5
+        %p.author
+          - authors = book.authors.map(&:name).join(" ")
+          - unless authors.blank?
+            = authors
+        %p.bookmark
+          %a{href: "javascript:void(0)", onclick: "addBookmark('#{book._key}');"} ☆
       - if params["word"] && book.content
         %p
           = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe

@@ -1,0 +1,26 @@
+%p= link_to("戻る", ".")
+%h3 ブックマーク一覧
+- if @books
+  %ul
+    - @books.each do |book|
+      - unless book
+        - next
+      %li
+        %h4= link_to(book.title, book.card_url)
+        %h5
+          - authors = book.authors.map(&:name).join(" ")
+          %p.author
+            - unless authors.blank?
+              = authors
+          %p.bookmark
+            %a{href: "javascript:void(0)", onclick: "removeBookmark('#{book._key}');"} ★
+        %p
+          [
+          = link_to("いますぐXHTML版で読む", book.html_url)
+          ]
+          [
+          = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
+          ]
+        %br
+- else
+  ブックマークがありません。

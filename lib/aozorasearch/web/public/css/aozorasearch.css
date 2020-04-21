@@ -5,3 +5,11 @@
   list-style: none;
   padding-left: 10px;
 }
+
+.author {
+  text-align: left;
+  float: left;
+}
+.bookmark {
+  text-align: right;
+}

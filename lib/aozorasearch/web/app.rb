@@ -95,6 +95,14 @@ module Aozorasearch
         haml :similar
       end
 
+      get "/bookmarks" do
+        database = GroongaDatabase.new
+        database.open(Command.new.database_dir)
+        searcher = GroongaSearcher.new
+        @books = searcher.bookmarks(database, params[:ids])
+        haml :bookmarks
+      end
+
       helpers do
         def search_and_paginate
           if params[:word]
