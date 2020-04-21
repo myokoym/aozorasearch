@@ -98,7 +98,7 @@ module Aozorasearch
       helpers do
         def search_and_paginate
           if params[:word]
-            words = params[:word].split(/[[:space:]]+/)
+            words = params[:word].strip.split(/[[:space:]]+/)
           else
             words = []
           end
