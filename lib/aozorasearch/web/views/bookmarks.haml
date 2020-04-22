@@ -1,0 +1,61 @@
+%p
+  [
+  =link_to("ブックマークの使い方", "#usage")
+  ]
+  [
+  =link_to("トップページに戻る", ".")
+  ]
+%h3 ブックマーク一覧
+- if @books && !@books.empty?
+  .row
+    .col-sm-7
+      %ul
+        - @books.each do |book|
+          - unless book
+            - next
+          %li
+            %h4= link_to(book.title, book.card_url)
+            %h5
+              - authors = book.authors.map(&:name).join(" ")
+              %p.author
+                - unless authors.blank?
+                  = authors
+              %p.bookmark
+                %a{"v-if": "book_ids['#{book._key}']", "v-on:click": "removeBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ★
+                %a{"v-else": true, "v-on:click": "addBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ☆
+            %p
+              [
+              = link_to("いますぐXHTML版で読む", book.html_url)
+              ]
+              [
+              = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
+              ]
+            %br
+- else
+  ブックマークがありません。
+%hr
+%p
+  %h3#usage ブックマークの使い方
+  %ul
+    %li 表示の見方
+    %ul
+      %li 白星（☆）がブックマークに未登録の状態です。
+      %li 黒星（★）が登録済みの状態です。
+    %li 追加と削除の手順
+    %ul
+      %li 白星（☆）をクリックするとブックマークに追加されます。
+      %li 黒星（★）をクリックするとブックマークから削除されます。
+      %li 検索結果ページとブックマーク一覧ページの両方で追加、削除が可能です。
+    %li 保存場所
+    %ul
+      %li ブックマーク情報はブラウザのストレージに保存されます。
+      %li ブラウザを変えると別ユーザー扱いになるのでご注意ください。
+    %li 活用方法
+    %ul
+      %li ブックマーク一覧ページを表示した時点でのブックリストがURLに含まれています。
+      %li URLを共有することで他のブラウザでも同じ一覧を表示することができます。
+      %li 課題図書の共有のような使い方も可能です。
+%p
+  [
+  = link_to("ページ上部に移動", "#")
+  ]

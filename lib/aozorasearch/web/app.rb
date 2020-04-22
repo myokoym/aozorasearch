@@ -54,6 +54,7 @@ module Aozorasearch
 
       before do
         @sub_url = ENV["AOZORASEARCH_SUB_URL"]
+        @book_ids = "{}"
         if params.include?(:ndc1) || params.include?(:ndc2) || params.include?(:ndc3)
           ndc_data_path = File.join(settings.root, "..", "..", "..", "data", "ndc-simple.json")
           @ndc_table = JSON.load(File.read(ndc_data_path))
@@ -72,6 +73,10 @@ module Aozorasearch
           redirect to('/search?' + params.to_param)
         end
         search_and_paginate
+        books = @paginated_books || @books
+        @book_ids = books.map do |book|
+          [book._key, false]
+        end.to_h.to_json.html_safe
         haml :index
       end
 
@@ -93,6 +98,17 @@ module Aozorasearch
         text = params[:text] || ""
         @books = searcher.similar_search_by_text(database, text).take(50)
         haml :similar
+      end
+
+      get "/bookmarks" do
+        database = GroongaDatabase.new
+        database.open(Command.new.database_dir)
+        searcher = GroongaSearcher.new
+        @books = searcher.bookmarks(database, params[:ids])
+        @book_ids = @books.map do |book|
+          [book._key, false]
+        end.to_h.to_json.html_safe
+        haml :bookmarks
       end
 
       helpers do

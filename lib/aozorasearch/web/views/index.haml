@@ -1,8 +1,11 @@
-- if url_for(only_path: true) != "/"
-  %p
+%p
+  - if url_for(only_path: true) != "/"
     [
     = link_to("よくある質問", "#faq")
     ]
+  [
+  = link_to("ブックマーク", "javascript:void(0)", "v-on:click": "goBookmarks('#{@sub_url}')")
+  ]
 %p
   = render :_search_form, layout: false
 - if @books

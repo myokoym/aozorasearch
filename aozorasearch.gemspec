@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["myokoym@gmail.com"]
   spec.description   = %q{The full-text search system for Aozora Bunko by Groonga (via Rroonga) with Ruby.}
   spec.summary       = %q{Full-Text Search system for Aozora Bunko}
-  spec.homepage      = "http://myokoym.net/aozorasearch/"
+  spec.homepage      = "https://myokoym.net/aozorasearch/"
   spec.license       = "LGPLv2.1+"
 
   spec.files         = `git ls-files`.split($/)

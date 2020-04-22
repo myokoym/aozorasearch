@@ -16,8 +16,58 @@
   %body
     = render :_header, layout: false
 
-    .container
+    .container#app
       = yield
 
     #footer.container.text-right
       = render :_footer, layout: false
+
+    -#%script(src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js")
+    %script(src="https://cdn.jsdelivr.net/npm/vue")
+    :javascript
+      var app = new Vue({
+        el: '#app',
+        data: {
+          bookmarks: JSON.parse(localStorage.getItem("bookmarks")),
+          book_ids: #{@book_ids}
+        },
+        created: function() {
+          for (var i = 0; i < Object.keys(this.book_ids).length; i++) {
+            var id = this.bookmarks[i];
+            if (id in this.book_ids) {
+              this.book_ids[id] = true;
+            }
+          };
+        },
+        methods: {
+          addBookmark: function(id) {
+            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            if (!bookmarks) {
+              bookmarks = [];
+            }
+            if (bookmarks.indexOf(id) < 0) {
+              bookmarks.push(id);
+            }
+            this.book_ids[id] = true;
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+          },
+          removeBookmark: function(id) {
+            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            if (bookmarks.indexOf(id) >= 0) {
+              bookmarks.splice(bookmarks.indexOf(id), 1);
+            }
+            this.book_ids[id] = false;
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+          },
+          goBookmarks: function(subUrl) {
+            if (!subUrl) {
+              subUrl = "";
+            }
+            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            if (!bookmarks) {
+              bookmarks = [];
+            }
+            window.location.href = subUrl + "bookmarks?ids=" + bookmarks.join(",");
+          }
+        }
+      })

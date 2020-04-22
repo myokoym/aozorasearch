@@ -54,6 +54,13 @@ module Aozorasearch
       sorted_similar_books
     end
 
+    def bookmarks(database, keys)
+      books = database.books
+      keys.split(",").map do |key|
+        books[key]
+      end
+    end
+
     private
     def select_books(books, words, options)
       selected_books = books.select do |record|
