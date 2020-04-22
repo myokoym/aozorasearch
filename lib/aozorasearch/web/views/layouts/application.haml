@@ -28,20 +28,23 @@
       var app = new Vue({
         el: '#app',
         data: {
-          bookmarks: JSON.parse(localStorage.getItem("bookmarks")),
+          bookmarks: JSON.parse(localStorage.getItem("aozorasearch-bookmarks")),
           book_ids: #{@book_ids}
         },
         created: function() {
+          if (!this.bookmarks) {
+            this.bookmarks = [];
+          }
           for (var i = 0; i < Object.keys(this.book_ids).length; i++) {
             var id = this.bookmarks[i];
             if (id in this.book_ids) {
               this.book_ids[id] = true;
             }
-          };
+          }
         },
         methods: {
           addBookmark: function(id) {
-            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            var bookmarks = JSON.parse(localStorage.getItem("aozorasearch-bookmarks"));
             if (!bookmarks) {
               bookmarks = [];
             }
@@ -49,21 +52,21 @@
               bookmarks.push(id);
             }
             this.book_ids[id] = true;
-            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+            localStorage.setItem("aozorasearch-bookmarks", JSON.stringify(bookmarks));
           },
           removeBookmark: function(id) {
-            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            var bookmarks = JSON.parse(localStorage.getItem("aozorasearch-bookmarks"));
             if (bookmarks.indexOf(id) >= 0) {
               bookmarks.splice(bookmarks.indexOf(id), 1);
             }
             this.book_ids[id] = false;
-            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+            localStorage.setItem("aozorasearch-bookmarks", JSON.stringify(bookmarks));
           },
           goBookmarks: function(subUrl) {
             if (!subUrl) {
               subUrl = "";
             }
-            var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+            var bookmarks = JSON.parse(localStorage.getItem("aozorasearch-bookmarks"));
             if (!bookmarks) {
               bookmarks = [];
             }
