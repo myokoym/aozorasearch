@@ -54,6 +54,7 @@ module Aozorasearch
 
       before do
         @sub_url = ENV["AOZORASEARCH_SUB_URL"]
+        @book_ids = "{}"
         if params.include?(:ndc1) || params.include?(:ndc2) || params.include?(:ndc3)
           ndc_data_path = File.join(settings.root, "..", "..", "..", "data", "ndc-simple.json")
           @ndc_table = JSON.load(File.read(ndc_data_path))
