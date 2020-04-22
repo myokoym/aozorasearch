@@ -13,7 +13,8 @@
             - unless authors.blank?
               = authors
           %p.bookmark
-            %a{href: "javascript:void(0)", onclick: "removeBookmark('#{book._key}');"} ★
+            %a{"v-if": "book_ids['#{book._key}']", "v-on:click": "removeBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ★
+            %a{"v-else": true, "v-on:click": "addBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ☆
         %p
           [
           = link_to("いますぐXHTML版で読む", book.html_url)

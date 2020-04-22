@@ -72,6 +72,10 @@ module Aozorasearch
           redirect to('/search?' + params.to_param)
         end
         search_and_paginate
+        books = @paginated_books || @books
+        @book_ids = books.map do |book|
+          [book._key, false]
+        end.to_h.to_json.html_safe
         haml :index
       end
 
@@ -100,6 +104,9 @@ module Aozorasearch
         database.open(Command.new.database_dir)
         searcher = GroongaSearcher.new
         @books = searcher.bookmarks(database, params[:ids])
+        @book_ids = @books.map do |book|
+          [book._key, false]
+        end.to_h.to_json.html_safe
         haml :bookmarks
       end
 

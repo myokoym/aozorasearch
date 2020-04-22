@@ -13,3 +13,7 @@
 .bookmark {
   text-align: right;
 }
+
+[v-cloak] {
+  opacity: 0;
+}
