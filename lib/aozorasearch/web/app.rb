@@ -232,7 +232,7 @@ module Aozorasearch
         end
 
         def last_update_time
-          path = File.join(settings.root, "..", "..", "..", ".aozorasearch", "db", "aozorasearch.db")
+          path = File.join(settings.root, "..", "..", "..", "aozorabunko")
           if File.exist?(path)
             File.mtime(path)
           else
