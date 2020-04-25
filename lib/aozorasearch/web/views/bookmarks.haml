@@ -23,13 +23,7 @@
               %p.bookmark
                 %a{"v-if": "book_ids['#{book._key}']", "v-on:click": "removeBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ★
                 %a{"v-else": true, "v-on:click": "addBookmark('#{book._key}');", href: "javascript:void(0)", "v-cloak": true} ☆
-            %p
-              [
-              = link_to("いますぐXHTML版で読む", book.html_url)
-              ]
-              [
-              = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
-              ]
+              = render :_books_links, layout: false, locals: {book: book}
             %br
 - else
   ブックマークがありません。

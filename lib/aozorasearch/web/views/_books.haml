@@ -25,13 +25,7 @@
       - if params["word"] && book.content
         %p
           = @snippet.execute(book.content).collect {|snippet| "...#{snippet}..."}.join(" / ").html_safe
-      %p
-        [
-        = link_to("いますぐXHTML版で読む", book.html_url)
-        ]
-        [
-        = link_to("えあ草紙・青空図書館で表示", "https://www.satokazzz.com/airzoshi/reader.php?action=aozora&id=#{book._key.to_i}")
-        ]
+      = render :_books_links, layout: false, locals: {book: book}
       %br
 - if @paginated_books.total_pages > 1
   = paginate(@paginated_books)
