@@ -30,7 +30,7 @@
         = link_to("いますぐXHTML版で読む", book.html_url)
         ]
         [
-        = link_to("青空 in Browsersで縦書き表示", "http://aozora.binb.jp/reader/main.html?cid=#{book._key.to_i}")
+        = link_to("えあ草紙・青空図書館で表示", "https://www.satokazzz.com/airzoshi/reader.php?action=aozora&id=#{book._key.to_i}")
         ]
       %br
 - if @paginated_books.total_pages > 1
