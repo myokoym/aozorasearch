@@ -35,7 +35,7 @@
           if (!this.bookmarks) {
             this.bookmarks = [];
           }
-          for (var i = 0; i < Object.keys(this.book_ids).length; i++) {
+          for (var i = 0; i < this.bookmarks.length; i++) {
             var id = this.bookmarks[i];
             if (id in this.book_ids) {
               this.book_ids[id] = true;
