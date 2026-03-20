@@ -53,7 +53,6 @@ module Aozorasearch
       elsif id_or_key_or_conditions.is_a?(Hash)
         conditions = id_or_key_or_conditions
         books.delete do |record|
-          expression_builder = nil
           conditions.each do |key, value|
             case key
             when :resource_key

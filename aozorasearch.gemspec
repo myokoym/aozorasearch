@@ -36,7 +36,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("racknga")
 
   spec.add_development_dependency("bundler")
-  spec.add_development_dependency("minitest")
+  # Minitest 6 では既存テストが使う Mock / stub 周りの前提が崩れるため、現状は 5 系に固定する。
+  spec.add_development_dependency("minitest", "~> 5.27")
   spec.add_development_dependency("rack-test")
   spec.add_development_dependency("rake")
 end

@@ -5,6 +5,7 @@ ENV["AOZORASEARCH_HOME"] ||= File.expand_path("tmp/test-home", __dir__)
 
 require "fileutils"
 require "minitest/autorun"
+require "minitest/mock"
 require "rack/test"
 
 FileUtils.mkdir_p(ENV["AOZORASEARCH_HOME"])

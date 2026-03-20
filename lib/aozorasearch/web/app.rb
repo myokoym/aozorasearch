@@ -22,6 +22,7 @@ require "sinatra/base"
 require "sinatra/json"
 require "sinatra/cross_origin"
 require "sinatra/reloader"
+require "active_support/core_ext/string/output_safety"
 require "json"
 require "haml"
 require "padrino-helpers"
@@ -147,7 +148,6 @@ module Aozorasearch
                                                size: size)
           end
           @paginated_books.extend(PaginationProxy)
-          @paginated_books
           if params[:author_id]
             @drilled_author_name = database.authors[params[:author_id]]&.name
           end

@@ -1,7 +1,7 @@
 # https://github.com/kaminari/kaminari-sinatra/blob/master/lib/kaminari/helpers/sinatra_helpers.rb
 module Kaminari::Helpers
   module SinatraHelpers
-    class ActionViewTemplateProxy
+    module AozorasearchSubUrlPatch
       def url_for(params)
         return params if String === params
 
@@ -11,11 +11,15 @@ module Kaminari::Helpers
         end
         query = @current_params.merge(extra_params)
         if ENV["AOZORASEARCH_SUB_URL"]
-          File.join(ENV["AOZORASEARCH_SUB_URL"], @current_path) + (query.empty? ? '' : "?#{query.to_query}")
+          File.join(ENV["AOZORASEARCH_SUB_URL"], @current_path) + (query.empty? ? "" : "?#{query.to_query}")
         else
-          @current_path + (query.empty? ? '' : "?#{query.to_query}")
+          super
         end
       end
     end
   end
 end
+
+Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy.prepend(
+  Kaminari::Helpers::SinatraHelpers::AozorasearchSubUrlPatch,
+)
