@@ -37,6 +37,38 @@ Ubuntu 系では、少なくとも次の package が必要です。
 
     $ bundle exec ruby -I lib bin/aozorasearch version
 
+### Remaining TODOs
+
+- `bundle exec ruby -I lib bin/aozorasearch start` の実 HTTP 起動確認は、loopback socket を開ける実環境で最終確認する
+- `thor` の `DidYouMean` deprecation warning は残っているため、必要なら Thor 系の追加更新を検討する
+- `activesupport` / `padrino-helpers` / `kaminari-sinatra` の warning は残っているため、必要なら別タスクで整理する
+
+### Merge Worktree Back To master
+
+この作業は `feature/library-upgrade` ブランチを `.worktrees/library-upgrade` で進めている前提です。
+
+1. worktree 側で最新の検証を実行する
+
+       $ cd /home/myokoym/dev/web/aozorasearch/.worktrees/library-upgrade
+       $ bundle exec rake test
+       $ bundle exec ruby -I lib bin/aozorasearch version
+
+2. 本流 `master` へ取り込む
+
+       $ cd /home/myokoym/dev/web/aozorasearch
+       $ git checkout master
+       $ git merge feature/library-upgrade
+
+3. 取り込み後に `master` 側で再検証する
+
+       $ bundle exec rake test
+       $ bundle exec ruby -I lib bin/aozorasearch version
+
+4. 問題なければ worktree と feature branch を片付ける
+
+       $ git worktree remove .worktrees/library-upgrade
+       $ git branch -d feature/library-upgrade
+
 ## License
 
 * Ruby Code (.rb): LGPL 2.1 or later. See LICENSE.txt for details.
