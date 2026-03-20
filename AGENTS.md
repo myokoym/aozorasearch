@@ -32,6 +32,9 @@
 - 本流へまだ合流しない場合は、なぜ合流しないのか、残っている TODO は何か、次にどの単位で合流するのかを明示すること。
 - 本流へ合流する場合は、どのコマンドで `master` に merge または cherry-pick するのか、合流後にどの検証を再実行するのか、worktree をいつ削除するのかまで明示すること。
 - worktree を削除するのは、本流への合流と合流後の検証が完了してからにすること。
+- `README.md` には、特定のローカル絶対パス、特定の worktree 名、特定ブランチ名に依存する一時的な作業手順を書かないこと。
+- worktree の合流手順を文書化する場合は、`AGENTS.md` に汎用ルールとして書くか、今回タスク固有であれば `.codex/plans/` または `.codex/research/` に保存すること。
+- 汎用的な merge の説明が必要な場合は、`git checkout <base-branch>`、`git merge <feature-branch>`、`git worktree remove <worktree-path>` のように placeholder で書き、環境依存の絶対パスを避けること。
 
 ## Gitコミット戦略
 - 機能の追加またはバグ修正が一段落し、上記の検証を通過したタイミングでコミットを実行すること。
