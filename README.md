@@ -11,8 +11,19 @@ The full-text search system for [Aozora Bunko](http://www.aozora.gr.jp/) by [Gro
 ### Prepare
 
     $ git clone https://github.com/myokoym/aozorasearch
+    $ bundle config set path vendor/bundle
     $ bundle install
     $ git submodule update --init  # Free space of 11GB is required
+
+Ruby 3.2 系でのローカル検証を前提にしています。
+
+Ubuntu 系では、少なくとも次の package が必要です。
+
+    $ sudo apt-get install -y ruby-dev build-essential pkg-config groonga libgroonga-dev groonga-bin
+
+### Run tests
+
+    $ bundle exec rake test
 
 ### Load data
 
@@ -21,6 +32,10 @@ The full-text search system for [Aozora Bunko](http://www.aozora.gr.jp/) by [Gro
 ### Run web server
 
     $ bundle exec ruby -I lib bin/aozorasearch start
+
+### Check CLI
+
+    $ bundle exec ruby -I lib bin/aozorasearch version
 
 ## License
 
