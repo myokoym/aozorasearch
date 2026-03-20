@@ -18,7 +18,6 @@
 
 require "thor"
 require "launchy"
-require "rack/handler/webrick"
 require "aozorasearch/version"
 require "aozorasearch/groonga_database"
 require "aozorasearch/groonga_searcher"
@@ -80,20 +79,9 @@ module Aozorasearch
     option :silent, type: :boolean, desc: "Don't open in browser"
     def start
       require "aozorasearch/web"
-      host = "127.0.0.1"
-      port = 4567
-      Launchy.open("http://#{host}:#{port}") unless options[:silent]
-      run_web_server(Aozorasearch::Web::App, host: host, port: port)
-    end
-
-    private
-
-    def run_web_server(app, host:, port:)
-      Rack::Handler::WEBrick.run(
-        app,
-        Host: host,
-        Port: port,
-      )
+      web_server_thread = Thread.new { Aozorasearch::Web::App.run! }
+      Launchy.open("http://localhost:4567") unless options[:silent]
+      web_server_thread.join
     end
   end
 end

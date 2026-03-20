@@ -85,6 +85,24 @@ class AppTest < Minitest::Test
     assert_equal("ok\n", stdout)
   end
 
+  def test_development_registers_sinatra_reloader
+    stdout, stderr, status = Open3.capture3(
+      {
+        "BUNDLE_GEMFILE" => File.expand_path("../../../Gemfile", __dir__),
+        "RACK_ENV" => "development"
+      },
+      "bundle",
+      "exec",
+      "ruby",
+      "-e",
+      'require "./lib/aozorasearch/web/app"; puts(Aozorasearch::Web::App.extensions.include?(Sinatra::Reloader) ? "ok" : "ng")',
+      chdir: File.expand_path("../../..", __dir__)
+    )
+
+    assert status.success?, stderr
+    assert_equal("ok\n", stdout)
+  end
+
   def test_webrick_is_available_for_local_server_start
     stdout, stderr, status = Open3.capture3(
       {
@@ -95,6 +113,23 @@ class AppTest < Minitest::Test
       "ruby",
       "-e",
       'require "webrick"; puts "ok"',
+      chdir: File.expand_path("../../..", __dir__)
+    )
+
+    assert status.success?, stderr
+    assert_equal("ok\n", stdout)
+  end
+
+  def test_rackup_and_puma_are_available_for_sinatra_start
+    stdout, stderr, status = Open3.capture3(
+      {
+        "BUNDLE_GEMFILE" => File.expand_path("../../../Gemfile", __dir__)
+      },
+      "bundle",
+      "exec",
+      "ruby",
+      "-e",
+      'require "rackup"; require "puma"; puts "ok"',
       chdir: File.expand_path("../../..", __dir__)
     )
 

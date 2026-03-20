@@ -21,6 +21,7 @@ require "active_support/core_ext/hash"
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/cross_origin"
+require "sinatra/reloader"
 require "json"
 require "haml"
 require "padrino-helpers"
@@ -46,6 +47,10 @@ module Aozorasearch
       I18n.default_locale = :ja
       helpers Kaminari::Helpers::SinatraHelpers
       register Sinatra::CrossOrigin
+
+      configure :development do
+        register Sinatra::Reloader
+      end
 
       before do
         @sub_url = ENV["AOZORASEARCH_SUB_URL"]

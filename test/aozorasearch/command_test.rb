@@ -32,16 +32,16 @@ class CommandTest < Minitest::Test
     assert_equal("#{Aozorasearch::VERSION}\n", stdout)
   end
 
-  def test_start_silent_runs_web_server_without_opening_browser
+  def test_start_silent_uses_sinatra_run_without_opening_browser
     command = Aozorasearch::Command.new([], {"silent" => true}, {})
-    started_with = nil
+    started = false
 
-    command.stub(:run_web_server, ->(app, host:, port:) { started_with = [app, host, port] }) do
+    Aozorasearch::Web::App.stub(:run!, -> { started = true }) do
       Launchy.stub(:open, ->(*) { flunk("silent start must not open browser") }) do
         command.start
       end
     end
 
-    assert_equal([Aozorasearch::Web::App, "127.0.0.1", 4567], started_with)
+    assert started
   end
 end
