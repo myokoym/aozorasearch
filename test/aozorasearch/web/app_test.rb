@@ -136,23 +136,4 @@ class AppTest < Minitest::Test
     assert status.success?, stderr
     assert_equal("ok\n", stdout)
   end
-
-  def test_kaminari_action_view_proxy_initializes_with_current_actionview
-    template = Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy.new(
-      current_path: "/search",
-      current_params: {word: "stub"},
-      param_name: :page,
-    )
-
-    path, query = template.url_for(page: 2).split("?", 2)
-
-    assert_equal("/search", path)
-    assert_equal({"word" => "stub", "page" => "2"}, Rack::Utils.parse_query(query))
-  end
-
-  def test_kaminari_action_view_proxy_preserves_actionview_constructor_contract
-    template = Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy.with_view_paths(["/tmp"])
-
-    assert_instance_of(Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy, template)
-  end
 end

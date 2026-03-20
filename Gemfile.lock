@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     aozorasearch (0.2.1)
+      actionview (~> 7.2.3)
+      activesupport (~> 7.2.3)
       haml
       kaminari
       kaminari-sinatra
@@ -23,39 +25,41 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (8.1.2)
-      activesupport (= 8.1.2)
+    actionview (7.2.3)
+      activesupport (= 7.2.3)
       builder (~> 3.1)
+      cgi
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activemodel (8.1.2)
-      activesupport (= 8.1.2)
-    activerecord (8.1.2)
-      activemodel (= 8.1.2)
-      activesupport (= 8.1.2)
+    activemodel (7.2.3)
+      activesupport (= 7.2.3)
+    activerecord (7.2.3)
+      activemodel (= 7.2.3)
+      activesupport (= 7.2.3)
       timeout (>= 0.4.0)
-    activesupport (8.1.2)
+    activesupport (7.2.3)
       base64
+      benchmark (>= 0.3)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.3.1)
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
-      json
       logger (>= 1.4.2)
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
-      uri (>= 0.13.1)
     addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     base64 (0.3.0)
+    benchmark (0.5.0)
     bigdecimal (4.0.1)
     builder (3.3.0)
     bundler-audit (0.9.3)
       bundler (>= 1.2.0)
       thor (~> 1.0)
+    cgi (0.5.1)
     childprocess (5.1.0)
       logger (~> 1.5)
     concurrent-ruby (1.3.6)
@@ -188,7 +192,6 @@ GEM
     timeout (0.6.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uri (1.1.1)
     webrick (1.9.2)
 
 PLATFORMS
