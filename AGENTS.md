@@ -13,13 +13,16 @@
 
 ## 調査メモとADR
 - 調査メモ、比較、候補、却下理由、実装前の設計メモ・specは `.codex/research/` にMarkdownで保存すること。
+- 今回は実装しないが将来着手したい機能候補、運用TODO、バックログ項目は `.codex/backlog/` にMarkdownで保存すること。
 - 長期的に参照したい設計判断、採用理由、影響範囲は `docs/adr/` にMarkdownで保存すること。
 - 調査メモのファイル名は `YYYYMMDDHHMMSS-<topic>.md` 形式とすること。
+- backlog のファイル名も `YYYYMMDDHHMMSS-<topic>.md` 形式とすること。
 - ADRのファイル名は `NNNN-<topic>.md` 形式とし、`NNNN` は4桁の連番とすること。
 - ADRには `Status` `Context` `Decision` `Consequences` `References` を含めること。
 - ADRの `References` には、関連する `.codex/research/` と `.codex/plans/` のファイルを明記すること。
 - 一時的な調査結果をすべてADRに書かず、まず `.codex/research/` に保存し、長期的な判断だけをADRへ昇格させること。
-- `.codex/research/` と `docs/adr/` に保存する本文は日本語で記述すること。ユーザーが明示的に別言語を指定した場合のみ、その指定に従うこと。
+- `.codex/research/`、`.codex/backlog/`、`docs/adr/` に保存する本文は日本語で記述すること。ユーザーが明示的に別言語を指定した場合のみ、その指定に従うこと。
+- 実装 plan に将来タスクや別件の backlog を混ぜないこと。今回の残 TODO だけを plan に書き、今回やらない項目は backlog へ分離すること。
 
 ## 完了定義と検証 (Verification)
 - コードの変更後、必ず対象プロジェクトのテストスイートを実行し、Passすることを確認すること。
