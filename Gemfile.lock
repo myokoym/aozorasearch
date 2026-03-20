@@ -16,6 +16,7 @@ PATH
       sinatra-contrib
       sinatra-cross_origin
       thor
+      webrick
 
 GEM
   remote: https://rubygems.org/
@@ -40,29 +41,34 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     backports (3.17.1)
+    base64 (0.3.0)
     builder (3.2.4)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
+    csv (3.3.5)
     erubi (1.9.0)
-    gqtp (1.0.7)
-    groonga-client (0.6.2)
+    gqtp (1.0.8)
+    groonga-client (0.7.1)
+      csv
       gqtp (>= 1.0.4)
-      groonga-command (>= 1.4.5)
+      groonga-command (>= 1.4.7)
       groonga-command-parser (>= 1.1.0)
       hashie
-    groonga-command (1.4.7)
+      rexml
+    groonga-command (1.5.3)
       json
-    groonga-command-parser (1.1.4)
+    groonga-command-parser (1.1.5)
       groonga-command (>= 1.4.0)
       json-stream
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
-    hashie (4.1.0)
+    hashie (5.1.0)
+      logger
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
-    json-stream (0.2.1)
+    json (2.19.2)
+    json-stream (1.0.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -82,37 +88,49 @@ GEM
       sinatra
     launchy (2.5.0)
       addressable (~> 2.7)
+    logger (1.7.0)
     loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mini_portile2 (2.4.0)
-    minitest (5.14.1)
+    mini_portile2 (2.8.9)
+    minitest (5.27.0)
     multi_json (1.14.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
+    net-protocol (0.2.2)
+      timeout
+    net-smtp (0.5.1)
+      net-protocol
+    nokogiri (1.19.2)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     padrino-helpers (0.14.4)
       i18n (~> 0.6, >= 0.6.7)
       padrino-support (= 0.14.4)
       tilt (>= 1.4.1, < 3)
     padrino-support (0.14.4)
     parallel (1.19.1)
-    pkg-config (1.4.1)
+    pkg-config (1.6.5)
     public_suffix (4.0.4)
-    rack (2.2.3)
+    racc (1.8.1)
+    rack (2.2.22)
     rack-protection (2.0.8.1)
       rack
-    racknga (0.9.3)
+    rack-test (2.2.0)
+      rack (>= 1.3)
+    racknga (0.9.5)
+      base64
+      csv
+      net-smtp
       rack
-      rroonga
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
     rake (13.0.1)
-    rroonga (10.0.1)
+    rexml (3.4.4)
+    rroonga (15.0.4)
       groonga-client (>= 0.0.3)
       json
       pkg-config
@@ -135,8 +153,10 @@ GEM
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timeout (0.6.1)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    webrick (1.9.2)
     zeitwerk (2.3.0)
 
 PLATFORMS
@@ -145,7 +165,9 @@ PLATFORMS
 DEPENDENCIES
   aozorasearch!
   bundler
+  minitest
+  rack-test
   rake
 
 BUNDLED WITH
-   1.17.2
+   2.4.19

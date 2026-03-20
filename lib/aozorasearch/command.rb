@@ -22,7 +22,6 @@ require "aozorasearch/version"
 require "aozorasearch/groonga_database"
 require "aozorasearch/groonga_searcher"
 require "aozorasearch/loader"
-require "aozorasearch/web"
 
 module Aozorasearch
   class Command < Thor
@@ -79,6 +78,7 @@ module Aozorasearch
     desc "start", "Start web server."
     option :silent, type: :boolean, desc: "Don't open in browser"
     def start
+      require "aozorasearch/web"
       web_server_thread = Thread.new { Aozorasearch::Web::App.run! }
       Launchy.open("http://localhost:4567") unless options[:silent]
       web_server_thread.join

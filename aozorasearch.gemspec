@@ -28,10 +28,13 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("padrino-helpers")
   spec.add_runtime_dependency("kaminari")
   spec.add_runtime_dependency("kaminari-sinatra")
+  spec.add_runtime_dependency("webrick")
   spec.add_runtime_dependency("haml")
   spec.add_runtime_dependency("launchy")
   spec.add_runtime_dependency("racknga")
 
   spec.add_development_dependency("bundler")
+  spec.add_development_dependency("minitest")
+  spec.add_development_dependency("rack-test")
   spec.add_development_dependency("rake")
 end
