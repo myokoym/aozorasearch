@@ -4,43 +4,6 @@ require "open3"
 class SetupCodexAgentsTest < Minitest::Test
   REPO_ROOT = File.expand_path("../..", __dir__)
   SCRIPT_PATH = File.join(REPO_ROOT, "scripts", "setup-codex-agents.sh")
-  MANAGED_AGENT_PATHS = %w[
-    categories/01-core-development/api-designer.toml
-    categories/01-core-development/backend-developer.toml
-    categories/01-core-development/code-mapper.toml
-    categories/01-core-development/frontend-developer.toml
-    categories/01-core-development/fullstack-developer.toml
-    categories/01-core-development/ui-designer.toml
-    categories/01-core-development/ui-fixer.toml
-    categories/03-infrastructure/database-administrator.toml
-    categories/03-infrastructure/deployment-engineer.toml
-    categories/03-infrastructure/devops-engineer.toml
-    categories/03-infrastructure/security-engineer.toml
-    categories/03-infrastructure/sre-engineer.toml
-    categories/04-quality-security/accessibility-tester.toml
-    categories/04-quality-security/architect-reviewer.toml
-    categories/04-quality-security/browser-debugger.toml
-    categories/04-quality-security/code-reviewer.toml
-    categories/04-quality-security/debugger.toml
-    categories/04-quality-security/error-detective.toml
-    categories/04-quality-security/performance-engineer.toml
-    categories/04-quality-security/qa-expert.toml
-    categories/04-quality-security/reviewer.toml
-    categories/04-quality-security/security-auditor.toml
-    categories/04-quality-security/test-automator.toml
-    categories/06-developer-experience/build-engineer.toml
-    categories/06-developer-experience/cli-developer.toml
-    categories/06-developer-experience/dependency-manager.toml
-    categories/06-developer-experience/documentation-engineer.toml
-    categories/06-developer-experience/dx-optimizer.toml
-    categories/06-developer-experience/git-workflow-manager.toml
-    categories/06-developer-experience/legacy-modernizer.toml
-    categories/06-developer-experience/refactoring-specialist.toml
-    categories/06-developer-experience/tooling-engineer.toml
-    categories/10-research-analysis/docs-researcher.toml
-    categories/10-research-analysis/search-specialist.toml
-  ].freeze
-  MANAGED_AGENT_FILES = MANAGED_AGENT_PATHS.map { |path| File.basename(path) }.freeze
 
   def test_setup_installs_all_managed_agents_from_local_source
     Dir.mktmpdir("codex-agents-test-") do |dir|
@@ -55,15 +18,15 @@ class SetupCodexAgentsTest < Minitest::Test
       )
 
       assert status.success?, stderr
-      assert_match(/Installed #{MANAGED_AGENT_FILES.size} managed agents/, stdout)
+      assert_match(/Installed #{managed_agent_files.size} managed agents/, stdout)
 
       installed_files = Dir.children(destination_dir).sort
       managed_manifest = File.join(destination_dir, ".aozorasearch-managed-agents")
 
       assert File.file?(managed_manifest)
-      assert_equal(MANAGED_AGENT_FILES.sort,
+      assert_equal(managed_agent_files.sort,
                    File.readlines(managed_manifest, chomp: true).reject(&:empty?).sort)
-      assert_equal((MANAGED_AGENT_FILES + [".aozorasearch-managed-agents"]).sort, installed_files)
+      assert_equal((managed_agent_files + [".aozorasearch-managed-agents"]).sort, installed_files)
     end
   end
 
@@ -97,7 +60,7 @@ class SetupCodexAgentsTest < Minitest::Test
     source_dir = File.join(base_dir, "source")
     FileUtils.mkdir_p(source_dir)
 
-    MANAGED_AGENT_PATHS.each do |relative_path|
+    managed_agent_paths.each do |relative_path|
       full_path = File.join(source_dir, relative_path)
       FileUtils.mkdir_p(File.dirname(full_path))
       agent_name = File.basename(relative_path, ".toml")
@@ -130,5 +93,17 @@ class SetupCodexAgentsTest < Minitest::Test
   def run_command(*command, chdir:)
     _stdout, stderr, status = Open3.capture3(*command, chdir: chdir)
     assert status.success?, stderr
+  end
+
+  def managed_agent_files
+    @managed_agent_files ||= managed_agent_paths.map { |path| File.basename(path) }.freeze
+  end
+
+  def managed_agent_paths
+    @managed_agent_paths ||= begin
+      script_content = File.read(SCRIPT_PATH)
+      paths_string = script_content.match(/managed_agent_paths=\(\s*([^)]+)\s*\)/m)&.captures&.first || ""
+      paths_string.scan(/"([^"]+)"/).flatten.freeze
+    end
   end
 end

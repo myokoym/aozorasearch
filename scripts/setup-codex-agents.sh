@@ -45,6 +45,11 @@ managed_agent_paths=(
   "categories/10-research-analysis/search-specialist.toml"
 )
 
+declare -A managed_filenames_lookup=()
+for path in "${managed_agent_paths[@]}"; do
+  managed_filenames_lookup["$(basename "$path")"]=1
+done
+
 ensure_catalog() {
   mkdir -p "$(dirname "$cache_dir")"
 
@@ -61,17 +66,6 @@ ensure_catalog() {
   git clone "$source_url" "$cache_dir"
 }
 
-managed_filename_lookup() {
-  local filename="$1"
-  local path
-  for path in "${managed_agent_paths[@]}"; do
-    if [[ "$(basename "$path")" == "$filename" ]]; then
-      return 0
-    fi
-  done
-  return 1
-}
-
 prune_removed_managed_agents() {
   if [[ ! -f "$manifest_path" ]]; then
     return 0
@@ -80,7 +74,7 @@ prune_removed_managed_agents() {
   local filename
   while IFS= read -r filename; do
     [[ -n "$filename" ]] || continue
-    if ! managed_filename_lookup "$filename"; then
+    if [[ ! -v "managed_filenames_lookup[$filename]" ]]; then
       rm -f "$destination_dir/$filename"
     fi
   done < "$manifest_path"
