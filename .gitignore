@@ -1,2 +1,5 @@
 /db
 /tmp
+/.worktrees
+/vendor/bundle
+/coverage

@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     aozorasearch (0.2.1)
+      actionview (~> 7.2.3)
+      activesupport (~> 7.2.3)
       haml
       kaminari
       kaminari-sinatra
@@ -9,135 +11,195 @@ PATH
       nokogiri
       padrino-helpers
       parallel
+      puma
       racknga
+      rackup
       rroonga (>= 5.0.0)
       rubyzip
       sinatra
       sinatra-contrib
       sinatra-cross_origin
       thor
+      webrick
 
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (6.0.3.1)
-      activesupport (= 6.0.3.1)
+    actionview (7.2.3)
+      activesupport (= 7.2.3)
       builder (~> 3.1)
-      erubi (~> 1.4)
-      rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activemodel (6.0.3.1)
-      activesupport (= 6.0.3.1)
-    activerecord (6.0.3.1)
-      activemodel (= 6.0.3.1)
-      activesupport (= 6.0.3.1)
-    activesupport (6.0.3.1)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-      zeitwerk (~> 2.2, >= 2.2.2)
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
-    backports (3.17.1)
-    builder (3.2.4)
-    concurrent-ruby (1.1.6)
+      cgi
+      erubi (~> 1.11)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+    activemodel (7.2.3)
+      activesupport (= 7.2.3)
+    activerecord (7.2.3)
+      activemodel (= 7.2.3)
+      activesupport (= 7.2.3)
+      timeout (>= 0.4.0)
+    activesupport (7.2.3)
+      base64
+      benchmark (>= 0.3)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.3.1)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      logger (>= 1.4.2)
+      minitest (>= 5.1)
+      securerandom (>= 0.3)
+      tzinfo (~> 2.0, >= 2.0.5)
+    addressable (2.8.9)
+      public_suffix (>= 2.0.2, < 8.0)
+    base64 (0.3.0)
+    benchmark (0.5.0)
+    bigdecimal (4.0.1)
+    builder (3.3.0)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
+    cgi (0.5.1)
+    childprocess (5.1.0)
+      logger (~> 1.5)
+    concurrent-ruby (1.3.6)
+    connection_pool (3.0.2)
     crass (1.0.6)
-    erubi (1.9.0)
-    gqtp (1.0.7)
-    groonga-client (0.6.2)
+    csv (3.3.5)
+    docile (1.4.1)
+    drb (2.2.3)
+    erubi (1.13.1)
+    gqtp (1.0.8)
+    groonga-client (0.7.1)
+      csv
       gqtp (>= 1.0.4)
-      groonga-command (>= 1.4.5)
+      groonga-command (>= 1.4.7)
       groonga-command-parser (>= 1.1.0)
       hashie
-    groonga-command (1.4.7)
+      rexml
+    groonga-command (1.5.3)
       json
-    groonga-command-parser (1.1.4)
+    groonga-command-parser (1.1.5)
       groonga-command (>= 1.4.0)
       json-stream
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
-    hashie (4.1.0)
-    i18n (0.9.5)
+    hashie (5.1.0)
+      logger
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
-    json-stream (0.2.1)
-    kaminari (1.2.1)
+    json (2.19.2)
+    json-stream (1.0.0)
+    kaminari (1.2.2)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.2.1)
-      kaminari-activerecord (= 1.2.1)
-      kaminari-core (= 1.2.1)
-    kaminari-actionview (1.2.1)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
       actionview
-      kaminari-core (= 1.2.1)
-    kaminari-activerecord (1.2.1)
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
       activerecord
-      kaminari-core (= 1.2.1)
-    kaminari-core (1.2.1)
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     kaminari-sinatra (1.0.1)
       actionview
       kaminari-core (~> 1.0)
       padrino-helpers
       sinatra
-    launchy (2.5.0)
-      addressable (~> 2.7)
-    loofah (2.5.0)
+    launchy (3.1.1)
+      addressable (~> 2.8)
+      childprocess (~> 5.0)
+      logger (~> 1.6)
+    logger (1.7.0)
+    loofah (2.25.1)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
-    mini_portile2 (2.4.0)
-    minitest (5.14.1)
-    multi_json (1.14.1)
-    mustermann (1.1.1)
+      nokogiri (>= 1.12.0)
+    mini_portile2 (2.8.9)
+    minitest (5.27.0)
+    multi_json (1.19.1)
+    mustermann (3.0.4)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
-    padrino-helpers (0.14.4)
-      i18n (~> 0.6, >= 0.6.7)
-      padrino-support (= 0.14.4)
-      tilt (>= 1.4.1, < 3)
-    padrino-support (0.14.4)
+    net-protocol (0.2.2)
+      timeout
+    net-smtp (0.5.1)
+      net-protocol
+    nio4r (2.7.5)
+    nokogiri (1.19.2)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    padrino-helpers (0.16.0)
+      i18n (>= 0.6.7, < 2)
+      padrino-support (= 0.16.0)
+      tilt (>= 2.1, < 3)
+    padrino-support (0.16.0)
     parallel (1.19.1)
-    pkg-config (1.4.1)
-    public_suffix (4.0.4)
-    rack (2.2.3)
-    rack-protection (2.0.8.1)
+    pkg-config (1.6.5)
+    public_suffix (7.0.5)
+    puma (7.2.0)
+      nio4r (~> 2.0)
+    racc (1.8.1)
+    rack (3.2.5)
+    rack-protection (4.2.1)
+      base64 (>= 0.1.0)
+      logger (>= 1.6.0)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.1.1)
+      base64 (>= 0.1.0)
+      rack (>= 3.0.0)
+    rack-test (2.2.0)
+      rack (>= 1.3)
+    racknga (0.9.5)
+      base64
+      csv
+      net-smtp
       rack
-    racknga (0.9.3)
-      rack
-      rroonga
-    rails-dom-testing (2.0.3)
-      activesupport (>= 4.2.0)
+    rackup (2.3.1)
+      rack (>= 3)
+    rails-dom-testing (2.3.0)
+      activesupport (>= 5.0.0)
+      minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.3.0)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.7.0)
+      loofah (~> 2.25)
+      nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rake (13.0.1)
-    rroonga (10.0.1)
+    rexml (3.4.4)
+    rroonga (15.0.4)
       groonga-client (>= 0.0.3)
       json
       pkg-config
-    ruby2_keywords (0.0.2)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.0)
-    sinatra (2.0.8.1)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+    securerandom (0.4.1)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
+    sinatra (4.2.1)
+      logger (>= 1.6.0)
+      mustermann (~> 3.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.2.1)
+      rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
-    sinatra-contrib (2.0.8.1)
-      backports (>= 2.8.2)
-      multi_json
-      mustermann (~> 1.0)
-      rack-protection (= 2.0.8.1)
-      sinatra (= 2.0.8.1)
+    sinatra-contrib (4.2.1)
+      multi_json (>= 0.0.2)
+      mustermann (~> 3.0)
+      rack-protection (= 4.2.1)
+      sinatra (= 4.2.1)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
     temple (0.8.2)
-    thor (1.0.1)
-    thread_safe (0.3.6)
-    tilt (2.0.10)
-    tzinfo (1.2.7)
-      thread_safe (~> 0.1)
-    zeitwerk (2.3.0)
+    thor (1.5.0)
+    tilt (2.7.0)
+    timeout (0.6.1)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    webrick (1.9.2)
 
 PLATFORMS
   ruby
@@ -145,7 +207,11 @@ PLATFORMS
 DEPENDENCIES
   aozorasearch!
   bundler
+  bundler-audit
+  minitest (~> 5.27)
+  rack-test
   rake
+  simplecov
 
 BUNDLED WITH
-   1.17.2
+   2.4.19

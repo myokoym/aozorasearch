@@ -28,10 +28,21 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("padrino-helpers")
   spec.add_runtime_dependency("kaminari")
   spec.add_runtime_dependency("kaminari-sinatra")
+  # kaminari-sinatra 1.0.1 は actionview 8 系の initialize 契約と非互換なため、依存で解けるか 7.2 系を先に検証する。
+  spec.add_runtime_dependency("actionview", "~> 7.2.3")
+  spec.add_runtime_dependency("activesupport", "~> 7.2.3")
+  spec.add_runtime_dependency("webrick")
+  spec.add_runtime_dependency("rackup")
+  spec.add_runtime_dependency("puma")
   spec.add_runtime_dependency("haml")
   spec.add_runtime_dependency("launchy")
   spec.add_runtime_dependency("racknga")
 
   spec.add_development_dependency("bundler")
+  spec.add_development_dependency("bundler-audit")
+  # Minitest 6 では既存テストが使う Mock / stub 周りの前提が崩れるため、現状は 5 系に固定する。
+  spec.add_development_dependency("minitest", "~> 5.27")
+  spec.add_development_dependency("rack-test")
   spec.add_development_dependency("rake")
+  spec.add_development_dependency("simplecov")
 end

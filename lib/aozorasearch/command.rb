@@ -22,7 +22,6 @@ require "aozorasearch/version"
 require "aozorasearch/groonga_database"
 require "aozorasearch/groonga_searcher"
 require "aozorasearch/loader"
-require "aozorasearch/web"
 
 module Aozorasearch
   class Command < Thor
@@ -79,9 +78,61 @@ module Aozorasearch
     desc "start", "Start web server."
     option :silent, type: :boolean, desc: "Don't open in browser"
     def start
-      web_server_thread = Thread.new { Aozorasearch::Web::App.run! }
-      Launchy.open("http://localhost:4567") unless options[:silent]
+      require "aozorasearch/web"
+      web_server_thread = start_web_server_in_background
+      Launchy.open(browser_url) unless options[:silent]
       web_server_thread.join
+    end
+
+    private
+
+    def start_web_server_in_background
+      Thread.new { run_web_server }
+    end
+
+    def run_web_server
+      Aozorasearch::Web::App.run!(server_options)
+    end
+
+    def server_options
+      {
+        server: "puma",
+        bind: server_bind,
+        port: server_port,
+        server_settings: {
+          Threads: "1:1",
+        },
+      }
+    end
+
+    def browser_url
+      "http://#{formatted_browser_host}:#{server_port}"
+    end
+
+    def browser_host
+      case server_bind
+      when "0.0.0.0", "::"
+        "localhost"
+      else
+        server_bind
+      end
+    end
+
+    def formatted_browser_host
+      host = browser_host
+      return host unless host.include?(":")
+
+      "[#{host}]"
+    end
+
+    def server_bind
+      ENV["BIND"] || "127.0.0.1"
+    end
+
+    def server_port
+      Integer(ENV["PORT"] || 4567)
+    rescue ArgumentError
+      4567
     end
   end
 end
