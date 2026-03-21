@@ -1,13 +1,17 @@
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 
 ENV["RACK_ENV"] = "test"
-ENV["AOZORASEARCH_HOME"] ||= File.expand_path("../tmp/test-home", __dir__)
 
 require "fileutils"
 require "simplecov"
 require "minitest/autorun"
 require "minitest/mock"
 require "rack/test"
+require "tmpdir"
+
+GENERATED_AOZORASEARCH_HOME = ENV["AOZORASEARCH_HOME"] ? nil : Dir.mktmpdir("aozorasearch-test-")
+ENV["AOZORASEARCH_HOME"] ||= GENERATED_AOZORASEARCH_HOME
+FileUtils.mkdir_p(ENV["AOZORASEARCH_HOME"]) unless GENERATED_AOZORASEARCH_HOME
 
 SimpleCov.start do
   enable_coverage :branch
@@ -15,11 +19,8 @@ SimpleCov.start do
   track_files "lib/**/*.rb"
 end
 
-FileUtils.rm_rf(ENV["AOZORASEARCH_HOME"])
-FileUtils.mkdir_p(ENV["AOZORASEARCH_HOME"])
-
 Minitest.after_run do
-  FileUtils.rm_rf(ENV["AOZORASEARCH_HOME"])
+  FileUtils.rm_rf(GENERATED_AOZORASEARCH_HOME) if GENERATED_AOZORASEARCH_HOME
 end
 
 require "aozorasearch/command"
