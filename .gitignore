@@ -1,5 +1,7 @@
 /db
 /tmp
 /.worktrees
+/.codex/agents
+/.codex/cache
 /vendor/bundle
 /coverage
