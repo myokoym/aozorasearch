@@ -6,9 +6,34 @@ class AppTest < Minitest::Test
 
   FakeAuthor = Struct.new(:name, keyword_init: true)
   FakeBook = Struct.new(:_key, :title, :card_url, :html_url, :authors, :content, :attributes, keyword_init: true)
+  FakeGroupRecord = Struct.new(:_key, :name, :label, :n_sub_records, keyword_init: true)
   FakeSnippet = Struct.new(:result) do
     def execute(_content)
       Array(result)
+    end
+  end
+
+  class FakeGroupedBooks
+    include Enumerable
+
+    def initialize(items)
+      @items = items
+    end
+
+    def each(&block)
+      @items.each(&block)
+    end
+
+    def sort(_sort_keys = nil)
+      self.class.new(@items.sort_by { |item| item._key.to_s })
+    end
+
+    def sort_by(&block)
+      self.class.new(@items.sort_by(&block))
+    end
+
+    def reverse
+      self.class.new(@items.reverse)
     end
   end
 
@@ -45,10 +70,11 @@ class AppTest < Minitest::Test
   end
 
   class FakeBooks
-    def initialize(books, total_count: books.length, empty: books.empty?)
+    def initialize(books, total_count: books.length, empty: books.empty?, groups: {})
       @books = books
       @total_count = total_count
       @empty = empty
+      @groups = groups
     end
 
     def paginate(_sort_keys, page:, size:)
@@ -73,6 +99,10 @@ class AppTest < Minitest::Test
 
     def empty?
       @empty
+    end
+
+    def group(name)
+      FakeGroupedBooks.new(@groups.fetch(name.to_s, []))
     end
   end
 
@@ -135,7 +165,26 @@ class AppTest < Minitest::Test
         content: "stub content 2",
         attributes: {"title" => "stub title 2"},
       ),
-    ], total_count: 40, empty: true)
+    ], total_count: 40, empty: false, groups: {
+      "authors" => [
+        FakeGroupRecord.new(_key: "a1", name: "author 1", n_sub_records: 2),
+      ],
+      "ndc1" => [
+        FakeGroupRecord.new(_key: "9", label: "文学", n_sub_records: 2),
+      ],
+      "kids" => [
+        FakeGroupRecord.new(_key: true, n_sub_records: 1),
+      ],
+      "orthography" => [
+        FakeGroupRecord.new(_key: "新字新仮名", n_sub_records: 2),
+      ],
+      "copyrighted" => [
+        FakeGroupRecord.new(_key: "なし", n_sub_records: 2),
+      ],
+      "age_group" => [
+        FakeGroupRecord.new(_key: "1890", n_sub_records: 1),
+      ],
+    })
     fake_searcher = Minitest::Mock.new
     fake_searcher.expect(:search, fake_books, [FakeDatabase, ["stub"], Hash])
     fake_searcher.expect(:snippet, FakeSnippet.new(["stub snippet"]))
@@ -149,6 +198,72 @@ class AppTest < Minitest::Test
     assert last_response.ok?, last_response.body
     assert_includes(last_response.body, "stub title 1")
     assert_includes(last_response.body, "?page=2")
+    assert_includes(last_response.body, "author 1")
+    assert_includes(last_response.body, "文学")
+    fake_searcher.verify
+  end
+
+  def test_search_with_reset_params_redirects_to_word_only_query
+    get "/search", word: "stub", author_id: "1", reset_params: "1"
+
+    assert last_response.redirect?
+    assert_equal("http://example.org/search?word=stub", last_response.location)
+  end
+
+  def test_similar_get_returns_ok
+    get "/similar"
+
+    assert last_response.ok?
+    assert_includes(last_response.body, "類似文書検索")
+  end
+
+  def test_similar_post_renders_stubbed_results
+    fake_searcher = Minitest::Mock.new
+    fake_searcher.expect(:similar_search_by_text, [
+      FakeBook.new(
+        _key: "1",
+        title: "similar title",
+        card_url: "https://example.com/books/1",
+        html_url: "https://example.com/books/1.html",
+        authors: [FakeAuthor.new(name: "author 1")],
+        content: "similar content",
+        attributes: {"title" => "similar title"},
+      ),
+    ], [FakeDatabase, "stub text"])
+
+    Aozorasearch::GroongaDatabase.stub(:new, FakeDatabase.new) do
+      Aozorasearch::GroongaSearcher.stub(:new, fake_searcher) do
+        post "/similar", text: "stub text"
+      end
+    end
+
+    assert last_response.ok?, last_response.body
+    assert_includes(last_response.body, "similar title")
+    fake_searcher.verify
+  end
+
+  def test_bookmarks_renders_stubbed_results
+    fake_searcher = Minitest::Mock.new
+    fake_searcher.expect(:bookmarks, [
+      FakeBook.new(
+        _key: "1",
+        title: "bookmark title",
+        card_url: "https://example.com/books/1",
+        html_url: "https://example.com/books/1.html",
+        authors: [FakeAuthor.new(name: "author 1")],
+        content: "bookmark content",
+        attributes: {"title" => "bookmark title"},
+      ),
+    ], [FakeDatabase, "1"])
+
+    Aozorasearch::GroongaDatabase.stub(:new, FakeDatabase.new) do
+      Aozorasearch::GroongaSearcher.stub(:new, fake_searcher) do
+        get "/bookmarks", ids: "1"
+      end
+    end
+
+    assert last_response.ok?, last_response.body
+    assert_includes(last_response.body, "bookmark title")
     fake_searcher.verify
   end
 
