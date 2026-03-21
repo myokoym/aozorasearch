@@ -9,9 +9,15 @@ require "minitest/mock"
 require "rack/test"
 require "tmpdir"
 
-GENERATED_AOZORASEARCH_HOME = ENV["AOZORASEARCH_HOME"] ? nil : Dir.mktmpdir("aozorasearch-test-")
-ENV["AOZORASEARCH_HOME"] ||= GENERATED_AOZORASEARCH_HOME
-FileUtils.mkdir_p(ENV["AOZORASEARCH_HOME"]) unless GENERATED_AOZORASEARCH_HOME
+GENERATED_AOZORASEARCH_HOME =
+  if ENV["AOZORASEARCH_HOME"].to_s.empty?
+    dir = Dir.mktmpdir("aozorasearch-test-")
+    ENV["AOZORASEARCH_HOME"] = dir
+    dir
+  else
+    FileUtils.mkdir_p(ENV["AOZORASEARCH_HOME"])
+    nil
+  end
 
 SimpleCov.start do
   enable_coverage :branch

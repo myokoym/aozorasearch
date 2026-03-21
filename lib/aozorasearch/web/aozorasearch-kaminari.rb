@@ -7,8 +7,8 @@ module Kaminari::Helpers
       # で落ちる。壊れた super チェインは使わず、kaminari-core 相当の処理を
       # Sinatra 用 template 構築込みでここに最小実装する。
       def paginate(scope, paginator_class: Kaminari::Helpers::Paginator, template: nil, **options)
-        current_path = env["PATH_INFO"] rescue nil
-        current_params = Rack::Utils.parse_query(env["QUERY_STRING"]).symbolize_keys rescue {}
+        current_path = env["PATH_INFO"]
+        current_params = Rack::Utils.parse_query(env["QUERY_STRING"].to_s).symbolize_keys
 
         template ||= Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy.new(
           current_params: current_params,

@@ -267,6 +267,24 @@ class AppTest < Minitest::Test
     fake_searcher.verify
   end
 
+  def test_kaminari_sub_url_preserves_prefix_for_absolute_current_path
+    original_sub_url = ENV["AOZORASEARCH_SUB_URL"]
+    ENV["AOZORASEARCH_SUB_URL"] = "/sub"
+
+    template = Kaminari::Helpers::SinatraHelpers::ActionViewTemplateProxy.new(
+      current_path: "/search",
+      current_params: {word: "stub"},
+      param_name: :page,
+    )
+
+    path, query = template.url_for(page: 2).split("?", 2)
+
+    assert_equal("/sub/search", path)
+    assert_equal({"word" => "stub", "page" => "2"}, Rack::Utils.parse_query(query))
+  ensure
+    ENV["AOZORASEARCH_SUB_URL"] = original_sub_url
+  end
+
   def test_loading_app_in_development_succeeds
     stdout, stderr, status = Open3.capture3(
       {
