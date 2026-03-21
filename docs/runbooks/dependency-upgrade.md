@@ -157,4 +157,4 @@ kill $SERVER_PID
 
 - `.codex/plans/20260320041434-library-upgrade.md`
 - `.codex/research/20260320041434-library-upgrade-design.md`
-- `docs/adr/2026-03-20-vps-runtime-checklist.md`
+- `docs/adr/0001-vps-runtime-checklist.md`
